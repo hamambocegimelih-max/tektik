@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>TekTık — İhtiyacın olan her araç, tek tık uzağında</title>
+<meta name="description" content="TekTık: QR kod, JSON, renk, gradient, görsel sıkıştırma ve daha fazlası. Ücretsiz, hızlı, tarayıcıda çalışan araçlar. SecureInf tarafından geliştirilmiştir.">
+<meta name="author" content="SecureInf">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark light">
+<meta property="og:title" content="TekTık — İhtiyacın olan her araç, tek tık uzağında">
+<meta property="og:description" content="Ücretsiz, hızlı ve tarayıcıda çalışan dijital araçlar. SecureInf tarafından geliştirilmiştir.">
+<meta property="og:type" content="website">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' https:; style-src 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src https:; frame-src https:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23000'/%3E%3Cpath d='M20 20h24M32 20v26' stroke='%23fff' stroke-width='6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
+<script>try{if(JSON.parse(localStorage.getItem('tektik.theme'))==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
+<style>
+:root{--bg:#000;--bg-soft:#0b0b0b;--surface:#111;--surface-2:#1b1b1b;--border:#2d2d2d;--text:#f4f4f4;--muted:#a3a3a3;--accent:#fff;--on-accent:#000;--danger:#ff7b7b;--ok:#7be495;--warn:#ffd27a;--radius:14px;--shadow:0 12px 32px rgba(0,0,0,.55);--ease:cubic-bezier(.2,.8,.2,1)}
+html[data-theme=light]{--bg:#fff;--bg-soft:#f5f5f5;--surface:#fff;--surface-2:#efefef;--border:#d6d6d6;--text:#0a0a0a;--muted:#5c5c5c;--accent:#000;--on-accent:#fff;--danger:#c62828;--ok:#17703a;--warn:#8a5a00;--shadow:0 12px 32px rgba(0,0,0,.14)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;overflow-x:hidden;transition:background .25s,color .25s}
+a{color:inherit}
+h1,h2,h3{line-height:1.2;margin:0}
+.wrap{width:100%;max-width:1100px;margin:0 auto;padding:0 16px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--accent);color:var(--on-accent);padding:8px 14px;border-radius:8px;z-index:100}
+.skip:focus{left:8px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding-top:env(safe-area-inset-top)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:800;font-size:1.2rem}
+.brand-text{display:flex;flex-direction:column;line-height:1.1}
+.brand-text b{font-size:1.15rem;letter-spacing:-.02em}
+.brand-text small{color:var(--muted);font-size:.7rem}
+.icon-btn{width:44px;height:44px;border-radius:12px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;display:grid;place-items:center;transition:transform .2s var(--ease),background .2s}
+.icon-btn:hover{background:var(--surface-2)}.icon-btn:active{transform:scale(.94)}
+svg.i{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{flex:1;padding-bottom:40px;outline:none}
+.hero{padding:40px 0 20px;text-align:center;animation:rise .5s var(--ease) both}
+.hero h1{font-size:clamp(2rem,7vw,3.4rem);letter-spacing:-.03em}
+.hero p{color:var(--muted);margin:10px auto 22px;max-width:560px}
+.search{position:relative;max-width:620px;margin:0 auto}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.search input{padding-left:46px;height:54px;border-radius:16px;font-size:1rem}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:18px 2px 6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:.92rem;cursor:pointer;transition:all .2s var(--ease)}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:700}
+.sec{margin-top:28px;animation:rise .45s var(--ease) both}
+.sec h2{font-size:1.1rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sec h2 .n{font-size:.78rem;color:var(--muted);font-weight:500}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);transition:transform .25s var(--ease),border-color .2s,box-shadow .25s}
+.card:hover{transform:translateY(-3px);border-color:var(--muted);box-shadow:var(--shadow)}
+.card-link{display:flex;gap:14px;align-items:flex-start;padding:16px 54px 16px 16px;text-decoration:none;min-height:88px}
+.ico{width:46px;height:46px;border-radius:12px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;flex:none}
+.card-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.card-body strong{font-size:1rem}
+.card-body span{color:var(--muted);font-size:.85rem;line-height:1.4}
+.fav{position:absolute;right:6px;top:6px;width:44px;height:44px;border-radius:12px;border:0;background:transparent;color:var(--muted);cursor:pointer;display:grid;place-items:center;transition:transform .2s var(--ease),color .2s}
+.fav:hover{color:var(--text)}.fav:active{transform:scale(.88)}
+.fav.on{color:var(--text)}.fav.on svg{fill:currentColor}
+.empty{border:1px dashed var(--border);border-radius:var(--radius);padding:28px 18px;text-align:center;color:var(--muted)}
+.tool-head{display:flex;align-items:center;gap:12px;padding:22px 0 8px;flex-wrap:wrap}
+.back{display:inline-flex;align-items:center;gap:6px;text-decoration:none;color:var(--muted);min-height:44px;padding-right:8px}
+.back:hover{color:var(--text)}
+.tool-title{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
+.tool-title h1{font-size:clamp(1.3rem,4.5vw,1.8rem)}
+.tool-title p{margin:2px 0 0;color:var(--muted);font-size:.9rem}
+.tool-actions{display:flex;gap:8px}
+.tool-body{animation:rise .4s var(--ease) both;margin-top:14px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;min-width:0}
+.panel+.panel{margin-top:14px}
+.split{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+.split>.panel+.panel{margin-top:0}
+@media(min-width:820px){.split{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.split.wide-left{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}}
+.field{margin-bottom:12px;min-width:0}
+.field>label,.lbl{display:block;font-size:.84rem;color:var(--muted);margin-bottom:6px}
+input,select,textarea{width:100%;max-width:100%;background:var(--bg-soft);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font:inherit;min-height:44px;transition:border-color .2s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}
+textarea{resize:vertical;min-height:140px;line-height:1.5}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.88rem}
+input[type=color]{padding:4px;height:44px;cursor:pointer}
+input[type=range]{padding:0;min-height:32px;accent-color:var(--accent)}
+input[type=checkbox]{width:20px;height:20px;min-height:0;accent-color:var(--accent);flex:none}
+.check{display:flex;align-items:center;gap:10px;min-height:36px;cursor:pointer;font-size:.95rem}
+.row{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.row.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media(max-width:420px){.row.three{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{min-height:44px;padding:0 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface-2);color:var(--text);font:inherit;font-weight:600;font-size:.92rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .15s var(--ease),background .2s,border-color .2s;text-decoration:none}
+.btn:hover{border-color:var(--muted)}.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.btn.sm{min-height:38px;padding:0 12px;font-size:.85rem}
+.msg{min-height:1.4em;font-size:.9rem;margin-top:8px;overflow-wrap:anywhere}
+.msg.err{color:var(--danger)}.msg.ok{color:var(--ok)}.msg.warn{color:var(--warn)}
+.msg small{display:block;color:var(--muted);margin-top:2px}
+.stats{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));margin-top:14px}
+.stat{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:12px}
+.stat b{display:block;font-size:1.4rem;letter-spacing:-.02em;overflow-wrap:anywhere}
+.stat span{color:var(--muted);font-size:.8rem}
+.preview{display:flex;flex-direction:column;align-items:center;gap:12px}
+.qr-box{width:100%;max-width:340px;aspect-ratio:1;display:grid;place-items:center;border-radius:12px;background:var(--bg-soft);border:1px solid var(--border);overflow:hidden}
+.qr-box canvas{width:100%;height:100%;image-rendering:pixelated;display:block}
+.qr-box .ph{color:var(--muted);text-align:center;padding:20px;font-size:.9rem}
+.drop{border:2px dashed var(--border);border-radius:var(--radius);padding:34px 16px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s}
+.drop:hover,.drop.over{border-color:var(--accent);background:var(--bg-soft)}
+.drop svg{width:34px;height:34px;margin-bottom:6px}
+.drop p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
+.imgprev{max-width:100%;max-height:360px;display:block;margin:0 auto;border-radius:10px;background:repeating-conic-gradient(var(--surface-2) 0 25%,var(--bg-soft) 0 50%) 0 0/16px 16px}
+.swatch{height:120px;border-radius:12px;border:1px solid var(--border);display:grid;place-items:center;font-weight:700;font-size:1.1rem;transition:background .15s}
+.shades{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-top:12px}
+.shades button{height:40px;border:1px solid var(--border);border-radius:8px;cursor:pointer;padding:0}
+.gprev{height:200px;border-radius:12px;border:1px solid var(--border)}
+.stop{display:grid;grid-template-columns:52px minmax(0,1fr) 76px 44px;gap:8px;align-items:center;margin-bottom:8px}
+.meter{height:10px;border-radius:99px;background:var(--surface-2);overflow:hidden;margin:10px 0 6px}
+.meter i{display:block;height:100%;width:0;background:var(--danger);border-radius:99px;transition:width .35s var(--ease),background .3s}
+.checks{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.checks li{font-size:.9rem;display:flex;gap:8px;align-items:center;color:var(--muted)}
+.checks li.ok{color:var(--text)}.checks li b{width:18px;text-align:center}
+.pw{position:relative}.pw input{padding-right:100px}
+.pw .btn{position:absolute;right:4px;top:4px;min-height:36px;padding:0 10px}
+.notes-layout{display:grid;gap:14px;grid-template-columns:minmax(0,1fr)}
+@media(min-width:820px){.notes-layout{grid-template-columns:300px minmax(0,1fr)}}
+.nlist{list-style:none;margin:10px 0 0;padding:0;max-height:260px;overflow-y:auto;display:grid;gap:6px}
+@media(min-width:820px){.nlist{max-height:520px}}
+.nlist button{width:100%;text-align:left;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font:inherit;cursor:pointer;min-height:44px}
+.nlist button[aria-current=true]{border-color:var(--accent);background:var(--surface-2)}
+.nlist b{display:block;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nlist small{color:var(--muted);font-size:.75rem}
+.convres{font-size:clamp(1.4rem,5vw,2rem);font-weight:800;letter-spacing:-.02em;overflow-wrap:anywhere}
+.table{width:100%;border-collapse:collapse;font-size:.9rem;margin-top:8px}
+.table td{padding:8px 4px;border-top:1px solid var(--border);overflow-wrap:anywhere}
+.table td:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.ad-slot{margin:22px 0 0;position:relative;overflow:hidden;min-height:60px;width:100%}
+.ad-slot::before{content:"Reklam";display:block;text-align:center;color:var(--muted);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+.ad-slot .ad-in{position:relative;width:100%;height:60px;overflow:hidden}
+.ad-slot iframe{position:absolute;top:0;left:0;width:468px;height:60px;border:0;background:transparent;transform-origin:0 0;color-scheme:normal}
+.ad-slot.sec{margin-top:28px}
+footer{border-top:1px solid var(--border);padding:22px 0 calc(22px + env(safe-area-inset-bottom));color:var(--muted);font-size:.85rem;text-align:center}
+footer b{color:var(--text)}
+footer p{margin:4px 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translate(-50%,30px);background:var(--accent);color:var(--on-accent);padding:12px 18px;border-radius:12px;font-weight:600;font-size:.92rem;opacity:0;pointer-events:none;transition:all .3s var(--ease);z-index:50;max-width:calc(100vw - 32px);text-align:center;box-shadow:var(--shadow)}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#toast[data-type=err]{background:var(--danger);color:#000}
+noscript p{padding:20px;text-align:center}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:520px){.stop{grid-template-columns:46px minmax(0,1fr) 64px 44px}.btns .btn{flex:1 1 auto}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">İçeriğe geç</a>
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="brand" href="#/" aria-label="TekTık ana sayfa">
+      <span class="logo" aria-hidden="true">T</span>
+      <span class="brand-text"><b>TekTık</b><small>SecureInf</small></span>
+    </a>
+    <button id="themeBtn" class="icon-btn" type="button" aria-label="Temayı değiştir"></button>
+  </div>
+</header>
+
+<main id="main" class="wrap" tabindex="-1">
+  <noscript><p>TekTık'ı kullanmak için tarayıcınızda JavaScript etkin olmalıdır.</p></noscript>
+
+  <section id="home" aria-label="Ana sayfa">
+    <div class="hero">
+      <h1>TekTık</h1>
+      <p>İhtiyacın olan her araç, tek tık uzağında.</p>
+      <div class="search">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Araç ara… (örn. QR, json, şifre)" aria-label="Araç ara" autocomplete="off" enterkeyhint="search">
+      </div>
+      <div id="chips" class="chips" role="group" aria-label="Kategoriler"></div>
+    </div>
+    <div class="ad-slot" data-slot="homeTop" hidden aria-label="Reklam alanı"></div>
+    <div id="lists"></div>
+    <div class="ad-slot" data-slot="homeBottom" hidden aria-label="Reklam alanı"></div>
+  </section>
+
+  <section id="toolView" aria-label="Araç" hidden></section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="ad-slot" data-slot="footer" hidden aria-label="Reklam alanı" style="margin:0 0 18px"></div>
+    <p>TekTık, <b>SecureInf</b> tarafından geliştirilmiştir.</p>
+    <p>Tüm işlemler tarayıcınızda yapılır; girdileriniz sunucuya gönderilmez. Reklamlar üçüncü taraflarca sunulur ve girdilerinize erişemez.</p>
+  </div>
+</footer>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+/* =========================================================
+   TekTık — SecureInf
+   Yapılandırma: reklam ve premium için hazır altyapı.
+   ========================================================= */
+const CONFIG = {
+  ads: { enabled: true, key: '768d2c4d2233e188c7e3fbb8bd61bed3', src: 'https://bauval.org/22/768d2c4d2233e188c7e3fbb8bd61bed3', w: 468, h: 60 }, // false yapılırsa tüm reklam alanları gizlenir; araçları asla engellemez
+  premium: { enabled: false, unlocked: false }                  // tier:'premium' olan araçlar için
+};
+
+/* =========================================================
+   QR KOD ÜRETİCİ (bağımsız, harici kütüphanesiz)
+   ========================================================= */
+/* QR:BEGIN */
+const QR = (() => {
+  const ECC_CPB = [
+    [-1,7,10,15,20,26,18,20,24,30,18,20,24,26,30,22,24,28,30,28,28,28,28,30,30,26,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    [-1,10,16,26,18,24,16,18,22,22,26,30,22,22,24,24,28,28,26,26,26,26,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28],
+    [-1,13,22,18,26,18,24,18,22,20,24,28,26,24,20,30,24,28,28,26,30,28,30,30,30,30,28,30,30,30,30,30,30,30,30,30,30,30,30,30,30],
+    [-1,17,28,22,16,22,28,26,26,24,28,24,28,22,24,24,30,28,28,26,28,30,24,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30,30]];
+  const NUM_BLK = [
+    [-1,1,1,1,1,1,2,2,2,2,4,4,4,4,4,6,6,6,6,7,8,8,9,9,10,12,12,12,13,14,15,16,17,18,19,19,20,21,22,24,25],
+    [-1,1,1,1,2,2,4,4,4,5,5,5,8,9,9,10,10,11,13,14,16,17,17,18,20,21,23,25,26,28,29,31,33,35,37,38,40,43,45,47,49],
+    [-1,1,1,2,2,4,4,6,6,8,8,8,10,12,16,12,17,16,18,21,20,23,23,25,27,29,34,34,35,38,40,43,45,48,51,53,56,59,62,65,68],
+    [-1,1,1,2,4,4,4,5,6,8,8,11,11,16,16,18,16,19,21,25,25,25,34,30,32,35,37,40,42,45,48,51,54,57,60,63,66,70,74,77,81]];
+  const ORD = { L: 0, M: 1, Q: 2, H: 3 };
+  const FMT = { L: 1, M: 0, Q: 3, H: 2 };
+  const bit = (x, i) => ((x >>> i) & 1) !== 0;
+  const P1 = [1,0,1,1,1,0,1,0,0,0,0], P2 = [0,0,0,0,1,0,1,1,1,0,1];
+
+  function rawModules(v) {
+    let r = (16 * v + 128) * v + 64;
+    if (v >= 2) { const n = Math.floor(v / 7) + 2; r -= (25 * n - 10) * n - 55; if (v >= 7) r -= 36; }
+    return r;
+  }
+  const dataCodewords = (v, e) => Math.floor(rawModules(v) / 8) - ECC_CPB[e][v] * NUM_BLK[e][v];
+  function rsMul(x, y) { let z = 0; for (let i = 7; i >= 0; i--) { z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z; }
+  function rsDiv(deg) {
+    const r = []; for (let i = 0; i < deg - 1; i++) r.push(0); r.push(1);
+    let root = 1;
+    for (let i = 0; i < deg; i++) {
+      for (let j = 0; j < r.length; j++) { r[j] = rsMul(r[j], root); if (j + 1 < r.length) r[j] ^= r[j + 1]; }
+      root = rsMul(root, 2);
+    }
+    return r;
+  }
+  function rsRem(data, div) {
+    const r = div.map(() => 0);
+    for (const b of data) { const f = b ^ r.shift(); r.push(0); div.forEach((c, i) => { r[i] ^= rsMul(c, f); }); }
+    return r;
+  }
+  function alignPos(v) {
+    if (v === 1) return [];
+    const n = Math.floor(v / 7) + 2;
+    const step = v === 32 ? 26 : Math.ceil((v * 4 + 4) / (n * 2 - 2)) * 2;
+    const r = [6];
+    for (let p = v * 4 + 10; r.length < n; p -= step) r.splice(1, 0, p);
+    return r;
+  }
+  function addEcc(data, v, e) {
+    const nb = NUM_BLK[e][v], bel = ECC_CPB[e][v], raw = Math.floor(rawModules(v) / 8);
+    const nShort = nb - raw % nb, shortLen = Math.floor(raw / nb);
+    const blocks = [], div = rsDiv(bel);
+    for (let i = 0, k = 0; i < nb; i++) {
+      const dat = data.slice(k, k + shortLen - bel + (i < nShort ? 0 : 1)); k += dat.length;
+      const ecc = rsRem(dat, div);
+      if (i < nShort) dat.push(0);
+      blocks.push(dat.concat(ecc));
+    }
+    const out = [];
+    for (let i = 0; i < blocks[0].length; i++) blocks.forEach((b, j) => { if (i !== shortLen - bel || j >= nShort) out.push(b[i]); });
+    return out;
+  }
+  function penalty(m, size) {
+    let p = 0;
+    for (let pass = 0; pass < 2; pass++) {
+      for (let a = 0; a < size; a++) {
+        let run = 1;
+        for (let b = 1; b < size; b++) {
+          const cur = pass ? m[b][a] : m[a][b], prev = pass ? m[b - 1][a] : m[a][b - 1];
+          if (cur === prev) { run++; if (run === 5) p += 3; else if (run > 5) p++; } else run = 1;
+        }
+        for (let b = 0; b + 11 <= size; b++) {
+          let s1 = true, s2 = true;
+          for (let k = 0; k < 11; k++) {
+            const v = pass ? m[b + k][a] : m[a][b + k];
+            if (v !== (P1[k] === 1)) s1 = false;
+            if (v !== (P2[k] === 1)) s2 = false;
+            if (!s1 && !s2) break;
+          }
+          if (s1 || s2) p += 40;
+        }
+      }
+    }
+    let dark = 0;
+    for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+      if (m[y][x]) dark++;
+      if (y < size - 1 && x < size - 1 && m[y][x] === m[y][x + 1] && m[y][x] === m[y + 1][x] && m[y][x] === m[y + 1][x + 1]) p += 3;
+    }
+    const total = size * size;
+    p += (Math.ceil(Math.abs(dark * 20 - total * 10) / total) - 1) * 10;
+    return p;
+  }
+
+  function encode(text, ecc = 'M') {
+    const e = ORD[ecc];
+    const bytes = Array.from(new TextEncoder().encode(text));
+    let ver = 1, cap = 0;
+    for (; ; ver++) {
+      if (ver > 40) throw new Error('TOO_LONG');
+      cap = dataCodewords(ver, e) * 8;
+      if (4 + (ver <= 9 ? 8 : 16) + bytes.length * 8 <= cap) break;
+    }
+    const bits = [];
+    const push = (val, len) => { for (let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+    push(4, 4); push(bytes.length, ver <= 9 ? 8 : 16); bytes.forEach(b => push(b, 8));
+    push(0, Math.min(4, cap - bits.length)); push(0, (8 - bits.length % 8) % 8);
+    for (let pad = 0xEC; bits.length < cap; pad ^= 0xEC ^ 0x11) push(pad, 8);
+    const data = [];
+    for (let i = 0; i < bits.length; i += 8) { let b = 0; for (let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; data.push(b); }
+    const all = addEcc(data, ver, e);
+
+    const size = ver * 4 + 17;
+    const m = Array.from({ length: size }, () => new Array(size).fill(false));
+    const f = Array.from({ length: size }, () => new Array(size).fill(false));
+    const setF = (x, y, d) => { m[y][x] = d; f[y][x] = true; };
+    const finder = (cx, cy) => {
+      for (let dy = -4; dy <= 4; dy++) for (let dx = -4; dx <= 4; dx++) {
+        const d = Math.max(Math.abs(dx), Math.abs(dy)), x = cx + dx, y = cy + dy;
+        if (x >= 0 && x < size && y >= 0 && y < size) setF(x, y, d !== 2 && d !== 4);
+      }
+    };
+    const align = (cx, cy) => { for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) setF(cx + dx, cy + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1); };
+    const drawFormat = mask => {
+      const d = (FMT[ecc] << 3) | mask;
+      let rem = d;
+      for (let i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >>> 9) * 0x537);
+      const bits15 = ((d << 10) | rem) ^ 0x5412;
+      for (let i = 0; i <= 5; i++) setF(8, i, bit(bits15, i));
+      setF(8, 7, bit(bits15, 6)); setF(8, 8, bit(bits15, 7)); setF(7, 8, bit(bits15, 8));
+      for (let i = 9; i < 15; i++) setF(14 - i, 8, bit(bits15, i));
+      for (let i = 0; i < 8; i++) setF(size - 1 - i, 8, bit(bits15, i));
+      for (let i = 8; i < 15; i++) setF(8, size - 15 + i, bit(bits15, i));
+      setF(8, size - 8, true);
+    };
+    for (let i = 0; i < size; i++) { setF(6, i, i % 2 === 0); setF(i, 6, i % 2 === 0); }
+    finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+    const ap = alignPos(ver), last = ap.length - 1;
+    for (let i = 0; i < ap.length; i++) for (let j = 0; j < ap.length; j++) {
+      if ((i === 0 && j === 0) || (i === 0 && j === last) || (i === last && j === 0)) continue;
+      align(ap[i], ap[j]);
+    }
+    drawFormat(0);
+    if (ver >= 7) {
+      let rem = ver;
+      for (let i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >>> 11) * 0x1F25);
+      const vb = (ver << 12) | rem;
+      for (let i = 0; i < 18; i++) { const c = bit(vb, i), a = size - 11 + i % 3, b = Math.floor(i / 3); setF(a, b, c); setF(b, a, c); }
+    }
+    // veri bitlerini yerleştir
+    for (let i = 0, right = size - 1; right >= 1; right -= 2) {
+      if (right === 6) right = 5;
+      for (let vert = 0; vert < size; vert++) for (let j = 0; j < 2; j++) {
+        const x = right - j, upward = ((right + 1) & 2) === 0, y = upward ? size - 1 - vert : vert;
+        if (!f[y][x] && i < all.length * 8) { m[y][x] = bit(all[i >>> 3], 7 - (i & 7)); i++; }
+      }
+    }
+    const applyMask = mask => {
+      for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
+        let inv;
+        switch (mask) {
+          case 0: inv = (x + y) % 2 === 0; break;
+          case 1: inv = y % 2 === 0; break;
+          case 2: inv = x % 3 === 0; break;
+          case 3: inv = (x + y) % 3 === 0; break;
+          case 4: inv = (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0; break;
+          case 5: inv = x * y % 2 + x * y % 3 === 0; break;
+          case 6: inv = (x * y % 2 + x * y % 3) % 2 === 0; break;
+          default: inv = ((x + y) % 2 + x * y % 3) % 2 === 0;
+        }
+        if (!f[y][x] && inv) m[y][x] = !m[y][x];
+      }
+    };
+    let best = 0, min = Infinity;
+    for (let mask = 0; mask < 8; mask++) {
+      applyMask(mask); drawFormat(mask);
+      const p = penalty(m, size);
+      if (p < min) { min = p; best = mask; }
+      applyMask(mask);
+    }
+    applyMask(best); drawFormat(best);
+    return { size, modules: m, version: ver, mask: best };
+  }
+  return { encode };
+})();
+/* QR:END */
+
+/* =========================================================
+   YARDIMCI FONKSİYONLAR
+   ========================================================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const debounce = (fn, ms = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const norm = s => String(s).toLocaleLowerCase('tr').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ı/g, 'i');
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const fmtBytes = n => n < 1024 ? n + ' B' : n < 1048576 ? (n / 1024).toFixed(1).replace('.', ',') + ' KB' : (n / 1048576).toFixed(2).replace('.', ',') + ' MB';
+const fmtNum = n => new Intl.NumberFormat('tr-TR').format(n);
+
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('tektik.' + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('tektik.' + k, JSON.stringify(v)); return true; } catch { return false; } }
+};
+
+let toastTimer;
+function toast(msg, type = 'ok') {
+  const t = $('#toast'); t.textContent = msg; t.dataset.type = type; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+async function copyText(text, okMsg = 'Panoya kopyalandı') {
+  if (!text) { toast('Kopyalanacak içerik yok.', 'err'); return false; }
+  try {
+    if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text); toast(okMsg); return true; }
+    throw new Error('no-clipboard');
+  } catch {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+      document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand('copy'); ta.remove();
+      if (ok) { toast(okMsg); return true; }
+    } catch { /* aşağıda hata gösterilir */ }
+    toast('Kopyalanamadı. Metni elle seçip kopyalayın.', 'err'); return false;
+  }
+}
+async function pasteInto(el) {
+  try { const t = await navigator.clipboard.readText(); el.value = t; el.dispatchEvent(new Event('input', { bubbles: true })); }
+  catch { toast('Panodan okuma izni verilmedi. Metni elle yapıştırın.', 'err'); }
+}
+function downloadBlob(blob, name) {
+  const u = URL.createObjectURL(blob), a = document.createElement('a');
+  a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 4000);
+}
+function downloadText(text, name, type = 'text/plain') {
+  if (!text) { toast('İndirilecek içerik yok.', 'err'); return; }
+  downloadBlob(new Blob([text], { type: type + ';charset=utf-8' }), name); toast('Dosya indirildi');
+}
+async function share({ title, text, url, files }) {
+  try {
+    if (navigator.share) {
+      const data = files ? { title, files } : { title, text, url };
+      if (!files || (navigator.canShare && navigator.canShare({ files }))) { await navigator.share(data); return; }
+    }
+  } catch (e) { if (e && e.name === 'AbortError') return; }
+  await copyText([text, url].filter(Boolean).join(' ') || title, 'Paylaşım desteklenmiyor; içerik panoya kopyalandı');
+}
+const setMsg = (el, text, type = '') => { el.className = 'msg ' + type; el.textContent = text; };
+
+/* renk yardımcıları */
+const parseHex = s => {
+  s = String(s).trim().replace(/^#/, '');
+  if (/^[0-9a-f]{3}$/i.test(s)) s = s.split('').map(c => c + c).join('');
+  if (!/^[0-9a-f]{6}$/i.test(s)) return null;
+  return [0, 2, 4].map(i => parseInt(s.slice(i, i + 2), 16));
+};
+const toHex = rgb => '#' + rgb.map(n => clamp(Math.round(n), 0, 255).toString(16).padStart(2, '0')).join('').toUpperCase();
+function rgbToHsl([r, g, b]) {
+  r /= 255; g /= 255; b /= 255;
+  const mx = Math.max(r, g, b), mn = Math.min(r, g, b), l = (mx + mn) / 2; let h = 0, s = 0;
+  if (mx !== mn) {
+    const d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+    h = mx === r ? (g - b) / d + (g < b ? 6 : 0) : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h *= 60;
+  }
+  return [Math.round(h), Math.round(s * 100), Math.round(l * 100)];
+}
+function hslToRgb([h, s, l]) {
+  s /= 100; l /= 100;
+  const k = n => (n + h / 30) % 12, a = s * Math.min(l, 1 - l);
+  const f = n => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)));
+  return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)];
+}
+const lum = ([r, g, b]) => { const c = [r, g, b].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const contrast = (a, b) => { const la = lum(a), lb = lum(b); return (Math.max(la, lb) + .05) / (Math.min(la, lb) + .05); };
+
+const ICONS = {
+  qr: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM21 14v.01M14 21h3M21 17v4"/>',
+  count: '<path d="M4 7V5h16v2M12 5v14M9 19h6"/>',
+  text: '<path d="M3 18 8 6l5 12M5 14h6M15 10h6M18 10v8"/>',
+  json: '<path d="M8 4c-2 0-3 1-3 3v2c0 1-1 3-2 3 1 0 2 2 2 3v2c0 2 1 3 3 3M16 4c2 0 3 1 3 3v2c0 1 1 3 2 3-1 0-2 2-2 3v2c0 2-1 3-3 3"/>',
+  color: '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2 1.5-2h2a3 3 0 0 0 3-3A9 9 0 0 0 12 3z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>',
+  gradient: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15 15 3M3 21 21 3M9 21 21 9"/>',
+  image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>',
+  units: '<path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/>',
+  lock: '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+  notes: '<path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/>',
+  star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
+  back: '<path d="M15 5 8 12l7 7"/>',
+  share: '<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  moon: '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  upload: '<path d="M12 16V4M7 9l5-5 5 5M4 20h16"/>'
+};
+const icon = n => `<svg class="i" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
+
+/* =========================================================
+   ARAÇLAR
+   Her araç: render(root) → (isteğe bağlı) temizleme fonksiyonu döndürür
+   ========================================================= */
+
+/* ---------- 1) QR KOD OLUŞTURUCU ---------- */
+function toolQr(root) {
+  const types = {
+    text: { label: 'Metin / Bağlantı', fields: [{ id: 'text', label: 'Metin veya bağlantı', kind: 'textarea', ph: 'https://ornek.com veya herhangi bir metin' }],
+      build: v => v.text.trim() },
+    wifi: { label: 'Wi-Fi', fields: [
+        { id: 'ssid', label: 'Ağ adı (SSID)', ph: 'EvWifi' }, { id: 'pass', label: 'Parola', ph: 'Wi-Fi parolası' },
+        { id: 'sec', label: 'Güvenlik', kind: 'select', opts: [['WPA', 'WPA / WPA2 / WPA3'], ['WEP', 'WEP'], ['nopass', 'Şifresiz']] }],
+      build: v => {
+        if (!v.ssid.trim()) return '';
+        if (v.sec !== 'nopass' && !v.pass) throw new Error('Wi-Fi parolasını girin ya da güvenlik türünü "Şifresiz" yapın.');
+        const e = s => s.replace(/([\\;,:"])/g, '\\$1');
+        return `WIFI:T:${v.sec};S:${e(v.ssid)};${v.sec === 'nopass' ? '' : 'P:' + e(v.pass) + ';'};`;
+      } },
+    mail: { label: 'E-posta', fields: [
+        { id: 'to', label: 'Alıcı e-posta', ph: 'ornek@alanadi.com', type: 'email' }, { id: 'subject', label: 'Konu', ph: 'Konu (isteğe bağlı)' },
+        { id: 'body', label: 'Mesaj', kind: 'textarea', ph: 'Mesaj (isteğe bağlı)' }],
+      build: v => {
+        if (!v.to.trim()) return '';
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.to.trim())) throw new Error('Geçerli bir e-posta adresi girin. Örnek: ad@alanadi.com');
+        const q = []; if (v.subject) q.push('subject=' + encodeURIComponent(v.subject)); if (v.body) q.push('body=' + encodeURIComponent(v.body));
+        return 'mailto:' + v.to.trim() + (q.length ? '?' + q.join('&') : '');
+      } },
+    tel: { label: 'Telefon', fields: [{ id: 'tel', label: 'Telefon numarası', ph: '+90 555 000 00 00', type: 'tel' }],
+      build: v => {
+        if (!v.tel.trim()) return '';
+        if (!/^\+?[\d\s()-]{5,20}$/.test(v.tel.trim())) throw new Error('Geçerli bir telefon numarası girin. Örnek: +90 555 000 00 00');
+        return 'tel:' + v.tel.replace(/[\s()-]/g, '');
+      } }
+  };
+  const prefs = Object.assign({ ecc: 'M', size: 512, fg: '#000000', bg: '#ffffff', border: 4 }, store.get('qr', {}));
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="field"><label for="qType">İçerik türü</label>
+        <select id="qType">${Object.entries(types).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join('')}</select></div>
+      <div id="qFields"></div>
+      <div class="row">
+        <div class="field"><label for="qSize">Boyut (piksel)</label>
+          <select id="qSize"><option>256</option><option>512</option><option>1024</option><option>2048</option></select></div>
+        <div class="field"><label for="qEcc">Hata düzeltme</label>
+          <select id="qEcc"><option value="L">Düşük (%7)</option><option value="M">Orta (%15)</option><option value="Q">Yüksek (%25)</option><option value="H">En yüksek (%30)</option></select></div>
+        <div class="field"><label for="qFg">Ön plan rengi</label><input id="qFg" type="color"></div>
+        <div class="field"><label for="qBg">Arka plan rengi</label><input id="qBg" type="color"></div>
+      </div>
+      <div id="qMsg" class="msg" role="alert"></div>
+    </div>
+    <div class="panel preview">
+      <div class="qr-box"><canvas id="qCanvas" hidden aria-label="Oluşturulan QR kod" role="img"></canvas><div id="qPh" class="ph">QR kodunuz burada görünecek. Soldaki alana içerik girin.</div></div>
+      <small id="qInfo" class="lbl"></small>
+      <div class="btns" style="justify-content:center">
+        <button class="btn primary" id="qPng" type="button" disabled>PNG indir</button>
+        <button class="btn" id="qSvg" type="button" disabled>SVG indir</button>
+        <button class="btn" id="qCopy" type="button" disabled>Görseli kopyala</button>
+        <button class="btn" id="qShare" type="button" disabled>Paylaş</button>
+      </div>
+    </div>
+  </div>`;
+  const $q = s => $(s, root);
+  const canvas = $q('#qCanvas'), msg = $q('#qMsg');
+  $q('#qSize').value = String(prefs.size); $q('#qEcc').value = prefs.ecc; $q('#qFg').value = prefs.fg; $q('#qBg').value = prefs.bg;
+  let type = 'text', qr = null;
+  function renderFields() {
+    $q('#qFields').innerHTML = types[type].fields.map(f => {
+      const id = 'qf-' + f.id;
+      const inner = f.kind === 'textarea' ? `<textarea id="${id}" placeholder="${esc(f.ph || '')}" style="min-height:110px"></textarea>`
+        : f.kind === 'select' ? `<select id="${id}">${f.opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</select>`
+        : `<input id="${id}" type="${f.type || 'text'}" placeholder="${esc(f.ph || '')}" autocomplete="off">`;
+      return `<div class="field"><label for="${id}">${f.label}</label>${inner}</div>`;
+    }).join('');
+  }
+  const vals = () => Object.fromEntries(types[type].fields.map(f => [f.id, $q('#qf-' + f.id).value]));
+  const acts = on => ['#qPng', '#qSvg', '#qCopy', '#qShare'].forEach(s => { $q(s).disabled = !on; });
+  function draw() {
+    const px = +$q('#qSize').value, border = prefs.border, mod = Math.max(1, Math.floor(px / (qr.size + 2 * border)));
+    const dim = mod * (qr.size + 2 * border);
+    canvas.width = canvas.height = dim;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = $q('#qBg').value; ctx.fillRect(0, 0, dim, dim);
+    ctx.fillStyle = $q('#qFg').value;
+    for (let y = 0; y < qr.size; y++) for (let x = 0; x < qr.size; x++) if (qr.modules[y][x]) ctx.fillRect((x + border) * mod, (y + border) * mod, mod, mod);
+    $q('#qInfo').textContent = `${dim}×${dim} px · Sürüm ${qr.version} · ${qr.size}×${qr.size} modül`;
+  }
+  function update() {
+    prefs.size = +$q('#qSize').value; prefs.ecc = $q('#qEcc').value; prefs.fg = $q('#qFg').value; prefs.bg = $q('#qBg').value; store.set('qr', prefs);
+    setMsg(msg, ''); qr = null;
+    let content;
+    try { content = types[type].build(vals()); } catch (e) { setMsg(msg, e.message, 'err'); content = null; canvas.hidden = true; $q('#qPh').hidden = false; acts(false); $q('#qInfo').textContent = ''; return; }
+    if (!content) { canvas.hidden = true; $q('#qPh').hidden = false; acts(false); $q('#qInfo').textContent = ''; return; }
+    try { qr = QR.encode(content, prefs.ecc); }
+    catch (e) { setMsg(msg, e.message === 'TOO_LONG' ? 'İçerik QR koda sığmayacak kadar uzun. Metni kısaltın veya hata düzeltme düzeyini düşürün.' : 'QR kod oluşturulamadı.', 'err'); canvas.hidden = true; $q('#qPh').hidden = false; acts(false); return; }
+    draw(); canvas.hidden = false; $q('#qPh').hidden = true; acts(true);
+    const cr = contrast(parseHex(prefs.fg), parseHex(prefs.bg));
+    if (cr < 3) setMsg(msg, 'Uyarı: Renkler arasındaki kontrast düşük; QR kod taranamayabilir.', 'warn');
+    else if (lum(parseHex(prefs.fg)) > lum(parseHex(prefs.bg))) setMsg(msg, 'Not: Ön plan arka plandan açık; bazı okuyucular ters renkli kodları okuyamaz.', 'warn');
+  }
+  const blobOf = () => new Promise(r => canvas.toBlob(r, 'image/png'));
+  $q('#qType').addEventListener('change', e => { type = e.target.value; renderFields(); update(); });
+  root.addEventListener('input', debounce(update, 120));
+  root.addEventListener('change', update);
+  $q('#qPng').addEventListener('click', async () => { const b = await blobOf(); if (b) { downloadBlob(b, 'tektik-qr.png'); toast('PNG indirildi'); } });
+  $q('#qSvg').addEventListener('click', () => {
+    const b = prefs.border, n = qr.size + 2 * b; let d = '';
+    for (let y = 0; y < qr.size; y++) for (let x = 0; x < qr.size; x++) if (qr.modules[y][x]) d += `M${x + b} ${y + b}h1v1h-1z`;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n} ${n}" shape-rendering="crispEdges"><rect width="${n}" height="${n}" fill="${prefs.bg}"/><path d="${d}" fill="${prefs.fg}"/></svg>`;
+    downloadText(svg, 'tektik-qr.svg', 'image/svg+xml');
+  });
+  $q('#qCopy').addEventListener('click', async () => {
+    try { const b = await blobOf(); await navigator.clipboard.write([new ClipboardItem({ 'image/png': b })]); toast('QR görseli panoya kopyalandı'); }
+    catch { toast('Tarayıcınız görseli kopyalamayı desteklemiyor. PNG olarak indirin.', 'err'); }
+  });
+  $q('#qShare').addEventListener('click', async () => { const b = await blobOf(); if (b) share({ title: 'TekTık QR kodu', files: [new File([b], 'tektik-qr.png', { type: 'image/png' })], text: 'TekTık ile oluşturulan QR kod' }); });
+  renderFields();
+}
+
+/* ---------- 2) KELİME VE KARAKTER SAYACI ---------- */
+function toolCount(root) {
+  root.innerHTML = `
+  <div class="panel">
+    <div class="field"><label for="cText">Metin</label><textarea id="cText" style="min-height:200px" placeholder="Metninizi buraya yazın veya yapıştırın…"></textarea></div>
+    <div class="btns">
+      <button class="btn" id="cPaste" type="button">Yapıştır</button>
+      <button class="btn" id="cCopy" type="button">Metni kopyala</button>
+      <button class="btn" id="cRep" type="button">İstatistikleri kopyala</button>
+      <button class="btn" id="cDl" type="button">İstatistikleri indir</button>
+      <button class="btn" id="cClear" type="button">Temizle</button>
+    </div>
+    <div class="stats" id="cStats" aria-live="polite"></div>
+  </div>
+  <div class="panel"><div class="lbl">En sık kullanılan kelimeler (3+ harf)</div><table class="table" id="cTop"></table></div>`;
+  const ta = $('#cText', root);
+  let report = '';
+  function calc() {
+    const t = ta.value;
+    const words = t.match(/[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu) || [];
+    const chars = Array.from(t).length, noSpace = Array.from(t.replace(/\s/g, '')).length;
+    const sentences = t.split(/[.!?…]+/).filter(s => /[\p{L}\p{N}]/u.test(s)).length;
+    const paragraphs = t.split(/\n\s*\n/).filter(s => s.trim()).length;
+    const lines = t ? t.split('\n').length : 0;
+    const uniq = new Set(words.map(w => w.toLocaleLowerCase('tr'))).size;
+    const mins = words.length / 200, talk = words.length / 130;
+    const dur = m => !words.length ? '0 sn' : m < 1 ? Math.max(1, Math.round(m * 60)) + ' sn' : Math.round(m * 10) / 10 + ' dk';
+    const rows = [['Kelime', fmtNum(words.length)], ['Karakter', fmtNum(chars)], ['Boşluksuz karakter', fmtNum(noSpace)], ['Cümle', fmtNum(sentences)], ['Paragraf', fmtNum(paragraphs)], ['Satır', fmtNum(lines)], ['Benzersiz kelime', fmtNum(uniq)], ['Okuma süresi', dur(mins)], ['Konuşma süresi', dur(talk)]];
+    $('#cStats', root).innerHTML = rows.map(r => `<div class="stat"><b>${esc(r[1])}</b><span>${r[0]}</span></div>`).join('');
+    report = 'TekTık — Metin istatistikleri\n' + rows.map(r => `${r[0]}: ${r[1]}`).join('\n');
+    const freq = new Map();
+    words.forEach(w => { const k = w.toLocaleLowerCase('tr'); if (k.length >= 3) freq.set(k, (freq.get(k) || 0) + 1); });
+    const top = [...freq].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'tr')).slice(0, 6);
+    const tbl = $('#cTop', root); tbl.textContent = '';
+    if (!top.length) { const tr = tbl.insertRow(), td = tr.insertCell(); td.textContent = 'Henüz veri yok.'; td.style.textAlign = 'left'; }
+    top.forEach(([w, n]) => { const tr = tbl.insertRow(); tr.insertCell().textContent = w; tr.insertCell().textContent = n + ' kez'; });
+  }
+  ta.addEventListener('input', calc);
+  $('#cPaste', root).onclick = () => pasteInto(ta);
+  $('#cCopy', root).onclick = () => copyText(ta.value);
+  $('#cRep', root).onclick = () => copyText(report);
+  $('#cDl', root).onclick = () => downloadText(report, 'tektik-istatistik.txt');
+  $('#cClear', root).onclick = () => { ta.value = ''; calc(); ta.focus(); };
+  calc();
+}
+
+/* ---------- 3) METİN DÖNÜŞTÜRÜCÜ ---------- */
+function toolText(root) {
+  const TR = { 'ç': 'c', 'Ç': 'C', 'ğ': 'g', 'Ğ': 'G', 'ı': 'i', 'İ': 'I', 'ö': 'o', 'Ö': 'O', 'ş': 's', 'Ş': 'S', 'ü': 'u', 'Ü': 'U' };
+  const words = s => s.normalize('NFC').split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const cap = w => w.charAt(0).toLocaleUpperCase('tr') + w.slice(1);
+  const b64enc = s => { const b = new TextEncoder().encode(s); let bin = ''; for (let i = 0; i < b.length; i += 0x8000) bin += String.fromCharCode.apply(null, b.subarray(i, i + 0x8000)); return btoa(bin); };
+  const b64dec = s => {
+    const c = s.replace(/\s+/g, '').replace(/-/g, '+').replace(/_/g, '/');
+    if (!c || !/^[A-Za-z0-9+/]*={0,2}$/.test(c) || c.length % 4 === 1) throw new Error('Geçersiz Base64 metni. Yalnızca A–Z, a–z, 0–9, +, / ve = karakterleri olmalı.');
+    const bin = atob(c), bytes = Uint8Array.from(bin, ch => ch.charCodeAt(0));
+    try { return new TextDecoder('utf-8', { fatal: true }).decode(bytes); } catch { throw new Error('Çözülen veri geçerli bir UTF-8 metni değil.'); }
+  };
+  const slug = s => s.replace(/[çÇğĞıİöÖşŞüÜ]/g, c => TR[c]).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  const OPS = [
+    ['Harf düzeni', [
+      ['upper', 'BÜYÜK HARF', s => s.toLocaleUpperCase('tr')],
+      ['lower', 'küçük harf', s => s.toLocaleLowerCase('tr')],
+      ['title', 'Başlık Düzeni', s => s.toLocaleLowerCase('tr').replace(/(^|[\s\-–—("'])(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase('tr'))],
+      ['sentence', 'Cümle düzeni', s => s.toLocaleLowerCase('tr').replace(/(^\s*|[.!?…]\s+|\n\s*)(\p{L})/gu, (m, a, b) => a + b.toLocaleUpperCase('tr'))],
+      ['camel', 'camelCase', s => words(s).map((w, i) => i ? cap(w.toLocaleLowerCase('tr')) : w.toLocaleLowerCase('tr')).join('')],
+      ['snake', 'snake_case', s => words(s).map(w => w.toLocaleLowerCase('tr')).join('_')],
+      ['kebab', 'kebab-case', s => words(s).map(w => w.toLocaleLowerCase('tr')).join('-')]]],
+    ['Temizleme', [
+      ['spaces', 'Fazla boşlukları temizle', s => s.split('\n').map(l => l.replace(/[ \t]+/g, ' ').trim()).join('\n').replace(/\n{3,}/g, '\n\n').trim()],
+      ['notr', 'Türkçe karakterleri kaldır', s => s.replace(/[çÇğĞıİöÖşŞüÜ]/g, c => TR[c])],
+      ['slug', 'URL dostu metin (slug)', slug],
+      ['reverse', 'Tersine çevir', s => Array.from(s).reverse().join('')]]],
+    ['Satırlar', [
+      ['sort', 'Satırları A→Z sırala', s => s.split('\n').sort((a, b) => a.localeCompare(b, 'tr')).join('\n')],
+      ['sortz', 'Satırları Z→A sırala', s => s.split('\n').sort((a, b) => b.localeCompare(a, 'tr')).join('\n')],
+      ['dedupe', 'Tekrarlanan satırları sil', s => [...new Set(s.split('\n'))].join('\n')],
+      ['number', 'Satır numaraları ekle', s => s.split('\n').map((l, i) => `${i + 1}. ${l}`).join('\n')],
+      ['emptyl', 'Boş satırları sil', s => s.split('\n').filter(l => l.trim()).join('\n')]]],
+    ['Kodlama', [
+      ['b64e', 'Base64 kodla', b64enc],
+      ['b64d', 'Base64 çöz', b64dec],
+      ['urle', 'URL kodla', s => encodeURIComponent(s)],
+      ['urld', 'URL kodunu çöz', s => { try { return decodeURIComponent(s); } catch { throw new Error('Geçersiz URL kodlaması. "%" işaretlerinin ardından iki onaltılık hane gelmelidir.'); } }]]]
+  ];
+  const flat = OPS.flatMap(g => g[1]);
+  const prefs = store.get('textop', 'upper');
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="field"><label for="tIn">Giriş metni</label><textarea id="tIn" style="min-height:180px" placeholder="Dönüştürmek istediğiniz metni yazın…"></textarea></div>
+      <div class="field"><label for="tOp">Dönüşüm</label><select id="tOp">${OPS.map(g => `<optgroup label="${g[0]}">${g[1].map(o => `<option value="${o[0]}">${o[1]}</option>`).join('')}</optgroup>`).join('')}</select></div>
+      <div class="btns"><button class="btn" id="tPaste" type="button">Yapıştır</button><button class="btn" id="tClear" type="button">Temizle</button></div>
+    </div>
+    <div class="panel">
+      <div class="field"><label for="tOut">Sonuç</label><textarea id="tOut" style="min-height:180px" readonly></textarea></div>
+      <div id="tMsg" class="msg" role="alert"></div>
+      <div class="btns">
+        <button class="btn primary" id="tCopy" type="button">Kopyala</button>
+        <button class="btn" id="tDl" type="button">İndir (.txt)</button>
+        <button class="btn" id="tUse" type="button">Girişe taşı</button>
+        <button class="btn" id="tShare" type="button">Paylaş</button>
+      </div>
+    </div>
+  </div>`;
+  const inp = $('#tIn', root), out = $('#tOut', root), op = $('#tOp', root), msg = $('#tMsg', root);
+  op.value = flat.some(o => o[0] === prefs) ? prefs : 'upper';
+  function run() {
+    store.set('textop', op.value); setMsg(msg, '');
+    if (!inp.value) { out.value = ''; return; }
+    try { out.value = flat.find(o => o[0] === op.value)[2](inp.value); }
+    catch (e) { out.value = ''; setMsg(msg, e.message || 'Dönüştürme sırasında bir hata oluştu.', 'err'); }
+  }
+  inp.addEventListener('input', run); op.addEventListener('change', run);
+  $('#tPaste', root).onclick = () => pasteInto(inp);
+  $('#tClear', root).onclick = () => { inp.value = ''; run(); inp.focus(); };
+  $('#tCopy', root).onclick = () => copyText(out.value);
+  $('#tDl', root).onclick = () => downloadText(out.value, 'tektik-metin.txt');
+  $('#tUse', root).onclick = () => { if (!out.value) return toast('Taşınacak sonuç yok.', 'err'); inp.value = out.value; run(); toast('Sonuç girişe taşındı'); };
+  $('#tShare', root).onclick = () => out.value ? share({ title: 'TekTık metin dönüştürücü', text: out.value }) : toast('Paylaşılacak sonuç yok.', 'err');
+  run();
+}
+
+/* ---------- 4) JSON BİÇİMLENDİRİCİ ---------- */
+function toolJson(root) {
+  const prefs = Object.assign({ indent: '2' }, store.get('json', {}));
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="field"><label for="jIn">JSON girişi</label><textarea id="jIn" class="mono" style="min-height:260px" spellcheck="false" placeholder='{"ad": "TekTık", "arac": 10}'></textarea></div>
+      <div class="row"><div class="field"><label for="jInd">Girinti</label><select id="jInd"><option value="2">2 boşluk</option><option value="4">4 boşluk</option><option value="tab">Sekme (tab)</option></select></div>
+      <div class="field"><label class="check" style="margin-top:26px"><input id="jSort" type="checkbox"> Anahtarları sırala</label></div></div>
+      <div class="btns">
+        <button class="btn primary" id="jFmt" type="button">Biçimlendir</button>
+        <button class="btn" id="jMin" type="button">Küçült</button>
+        <button class="btn" id="jVal" type="button">Doğrula</button>
+        <button class="btn" id="jPaste" type="button">Yapıştır</button>
+        <button class="btn" id="jSample" type="button">Örnek</button>
+        <button class="btn" id="jClear" type="button">Temizle</button>
+      </div>
+      <div id="jMsg" class="msg" role="alert"></div>
+      <div class="btns"><button class="btn sm" id="jGo" type="button" hidden>Hataya git</button></div>
+    </div>
+    <div class="panel">
+      <div class="field"><label for="jOut">Sonuç</label><textarea id="jOut" class="mono" style="min-height:260px" readonly spellcheck="false"></textarea></div>
+      <div class="btns">
+        <button class="btn primary" id="jCopy" type="button">Kopyala</button>
+        <button class="btn" id="jDl" type="button">İndir (.json)</button>
+        <button class="btn" id="jUse" type="button">Girişe taşı</button>
+        <button class="btn" id="jShare" type="button">Paylaş</button>
+      </div>
+    </div>
+  </div>`;
+  const inp = $('#jIn', root), out = $('#jOut', root), msg = $('#jMsg', root), go = $('#jGo', root);
+  $('#jInd', root).value = prefs.indent;
+  let errPos = null;
+  function describe(e, src) {
+    const m = String(e.message || e); let line = null, col = null, pos = null, r;
+    if ((r = m.match(/line (\d+) column (\d+)/i))) { line = +r[1]; col = +r[2]; const L = src.split('\n'); pos = L.slice(0, line - 1).reduce((a, l) => a + l.length + 1, 0) + col - 1; }
+    else if ((r = m.match(/position (\d+)/i))) { pos = +r[1]; const b = src.slice(0, pos).split('\n'); line = b.length; col = b[b.length - 1].length + 1; }
+    let hint = 'Söz diziminde bir hata var.';
+    if (/end of (json|data)|unexpected end/i.test(m)) hint = 'Metin beklenenden önce bitti; kapanmamış bir parantez, süslü parantez veya tırnak olabilir.';
+    else if (/property name|double-quoted/i.test(m)) hint = 'Anahtarlar çift tırnak içinde olmalı ve sondaki fazla virgül kaldırılmalıdır.';
+    else if (/unexpected|expected/i.test(m)) hint = 'Beklenmeyen bir karakter var; eksik ya da fazla virgül, tek tırnak veya tırnaksız anahtar olabilir.';
+    return { text: 'Geçersiz JSON' + (line ? ` (satır ${line}, sütun ${col})` : '') + '. ' + hint, tech: m, pos };
+  }
+  const sortKeys = v => Array.isArray(v) ? v.map(sortKeys) : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort((a, b) => a.localeCompare(b, 'tr')).map(k => [k, sortKeys(v[k])])) : v;
+  const depth = v => v && typeof v === 'object' ? 1 + Math.max(0, ...Object.values(v).map(depth)) : 0;
+  const count = v => v && typeof v === 'object' ? Object.values(v).reduce((a, x) => a + count(x), 0) + Object.keys(v).length : 0;
+  function parse() {
+    errPos = null; go.hidden = true;
+    const src = inp.value;
+    if (!src.trim()) { setMsg(msg, 'Lütfen bir JSON metni girin.', 'err'); out.value = ''; return undefined; }
+    try { return { v: JSON.parse(src) }; }
+    catch (e) {
+      const d = describe(e, src); errPos = d.pos; out.value = '';
+      msg.className = 'msg err'; msg.textContent = d.text; const s = document.createElement('small'); s.textContent = 'Teknik ayrıntı: ' + d.tech; msg.appendChild(s);
+      go.hidden = d.pos == null; return undefined;
+    }
+  }
+  function okInfo(v, src) {
+    const t = Array.isArray(v) ? 'dizi' : v === null ? 'null' : typeof v === 'object' ? 'nesne' : typeof v;
+    setMsg(msg, `✓ Geçerli JSON — kök: ${t}, ${fmtNum(count(v))} öğe, derinlik ${depth(v)}, ${fmtBytes(new TextEncoder().encode(src).length)}`, 'ok');
+  }
+  function indentVal() { const i = $('#jInd', root).value; store.set('json', { indent: i }); return i === 'tab' ? '\t' : +i; }
+  function act(kind) {
+    const r = parse(); if (!r) return;
+    let v = r.v; if ($('#jSort', root).checked) v = sortKeys(v);
+    if (kind === 'val') { out.value = ''; okInfo(r.v, inp.value); return; }
+    out.value = kind === 'min' ? JSON.stringify(v) : JSON.stringify(v, null, indentVal());
+    okInfo(r.v, inp.value);
+  }
+  $('#jFmt', root).onclick = () => act('fmt'); $('#jMin', root).onclick = () => act('min'); $('#jVal', root).onclick = () => act('val');
+  $('#jPaste', root).onclick = () => pasteInto(inp);
+  $('#jClear', root).onclick = () => { inp.value = ''; out.value = ''; setMsg(msg, ''); go.hidden = true; inp.focus(); };
+  $('#jSample', root).onclick = () => { inp.value = '{"uygulama":"TekTık","gelistirici":"SecureInf","araclar":["QR","JSON","Renk"],"ucretsiz":true,"surum":1.0}'; act('fmt'); };
+  go.onclick = () => { if (errPos == null) return; inp.focus(); inp.setSelectionRange(errPos, Math.min(inp.value.length, errPos + 1)); };
+  $('#jCopy', root).onclick = () => copyText(out.value);
+  $('#jDl', root).onclick = () => downloadText(out.value, 'tektik.json', 'application/json');
+  $('#jUse', root).onclick = () => { if (!out.value) return toast('Taşınacak sonuç yok.', 'err'); inp.value = out.value; toast('Sonuç girişe taşındı'); };
+  $('#jShare', root).onclick = () => out.value ? share({ title: 'TekTık JSON', text: out.value }) : toast('Paylaşılacak sonuç yok.', 'err');
+}
+
+/* ---------- 5) HEX ⇄ RGB RENK DÖNÜŞTÜRÜCÜ ---------- */
+function toolColor(root) {
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="field"><label for="clPick">Renk seçici</label><input id="clPick" type="color" value="#3366ff"></div>
+      <div class="field"><label for="clHex">HEX</label><input id="clHex" class="mono" autocomplete="off" spellcheck="false" placeholder="#3366FF"></div>
+      <div class="field"><label for="clRgb">RGB</label><input id="clRgb" class="mono" autocomplete="off" spellcheck="false" placeholder="51, 102, 255 veya rgb(51,102,255)"></div>
+      <div class="field"><label for="clHsl">HSL (çıktı)</label><input id="clHsl" class="mono" readonly></div>
+      <div id="clMsg" class="msg" role="alert"></div>
+      <div class="btns">
+        <button class="btn" id="clCopyHex" type="button">HEX kopyala</button>
+        <button class="btn" id="clCopyRgb" type="button">RGB kopyala</button>
+        <button class="btn" id="clCopyHsl" type="button">HSL kopyala</button>
+        <button class="btn" id="clRnd" type="button">Rastgele</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="swatch" id="clSw"><span id="clSwT">Örnek metin</span></div>
+      <div class="stats" id="clCon"></div>
+      <div class="lbl" style="margin-top:14px">Tonlar (dokunarak seçin)</div>
+      <div class="shades" id="clShades"></div>
+    </div>
+  </div>`;
+  const $c = s => $(s, root);
+  let rgb = [51, 102, 255];
+  function sync(except) {
+    const hex = toHex(rgb), hsl = rgbToHsl(rgb);
+    if (except !== 'hex') $c('#clHex').value = hex;
+    if (except !== 'rgb') $c('#clRgb').value = rgb.join(', ');
+    $c('#clPick').value = hex.toLowerCase();
+    $c('#clHsl').value = `hsl(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%)`;
+    const sw = $c('#clSw'); sw.style.background = hex;
+    const w = contrast(rgb, [255, 255, 255]), b = contrast(rgb, [0, 0, 0]);
+    $c('#clSwT').style.color = w >= b ? '#fff' : '#000';
+    const lvl = c => c >= 7 ? 'AAA' : c >= 4.5 ? 'AA' : c >= 3 ? 'Yalnızca büyük metin' : 'Yetersiz';
+    $c('#clCon').innerHTML = `<div class="stat"><b>${w.toFixed(2).replace('.', ',')}:1</b><span>Beyaz metin · ${lvl(w)}</span></div><div class="stat"><b>${b.toFixed(2).replace('.', ',')}:1</b><span>Siyah metin · ${lvl(b)}</span></div>`;
+    const sh = $c('#clShades'); sh.textContent = '';
+    for (let i = 1; i <= 9; i++) {
+      const c = hslToRgb([hsl[0], hsl[1], i * 10]), btn = document.createElement('button');
+      btn.type = 'button'; btn.style.background = toHex(c); btn.setAttribute('aria-label', 'Ton ' + toHex(c)); btn.title = toHex(c);
+      btn.onclick = () => { rgb = c; setMsg($c('#clMsg'), ''); sync(); }; sh.appendChild(btn);
+    }
+  }
+  $c('#clPick').addEventListener('input', e => { rgb = parseHex(e.target.value); setMsg($c('#clMsg'), ''); sync(); });
+  $c('#clHex').addEventListener('input', e => {
+    const v = parseHex(e.target.value);
+    if (!v) return setMsg($c('#clMsg'), 'Geçersiz HEX kodu. Örnek: #1A2B3C veya #FFF', 'err');
+    rgb = v; setMsg($c('#clMsg'), ''); sync('hex');
+  });
+  $c('#clRgb').addEventListener('input', e => {
+    const m = e.target.value.match(/^\s*(?:rgb\()?\s*(\d{1,3})\s*[,\s]\s*(\d{1,3})\s*[,\s]\s*(\d{1,3})\s*\)?\s*$/i);
+    if (!m || [m[1], m[2], m[3]].some(n => +n > 255)) return setMsg($c('#clMsg'), 'Geçersiz RGB değeri. Her sayı 0–255 arasında olmalı. Örnek: 26, 43, 60', 'err');
+    rgb = [+m[1], +m[2], +m[3]]; setMsg($c('#clMsg'), ''); sync('rgb');
+  });
+  $c('#clCopyHex').onclick = () => copyText(toHex(rgb));
+  $c('#clCopyRgb').onclick = () => copyText(`rgb(${rgb.join(', ')})`);
+  $c('#clCopyHsl').onclick = () => copyText($c('#clHsl').value);
+  $c('#clRnd').onclick = () => { rgb = [0, 0, 0].map(() => Math.floor(Math.random() * 256)); setMsg($c('#clMsg'), ''); sync(); };
+  sync();
+}
+
+/* ---------- 6) CSS GRADIENT OLUŞTURUCU ---------- */
+function toolGradient(root) {
+  const PRESETS = [['Gün batımı', 'linear', 135, ['#ff512f', '#dd2476']], ['Okyanus', 'linear', 160, ['#2193b0', '#6dd5ed']], ['Orman', 'linear', 135, ['#134e5e', '#71b280']], ['Mor sis', 'linear', 120, ['#41295a', '#2f0743']], ['Siyah-beyaz', 'linear', 90, ['#000000', '#ffffff']], ['Neon', 'linear', 45, ['#00f5a0', '#00d9f5']], ['Güneş', 'radial', 0, ['#fff200', '#ff6a00']], ['Gökkuşağı', 'conic', 0, ['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff0000']]];
+  let st = store.get('grad', null);
+  const okSt = st && ['linear', 'radial', 'conic'].includes(st.type) && Array.isArray(st.stops) && st.stops.length >= 2;
+  if (okSt) { st.stops = st.stops.filter(s => /^#[0-9a-f]{6}$/i.test(s.c) && Number.isFinite(+s.p)).slice(0, 6); st.angle = clamp(+st.angle || 0, 0, 360); }
+  if (!okSt || st.stops.length < 2) st = { type: 'linear', angle: 135, stops: [{ c: '#000000', p: 0 }, { c: '#ffffff', p: 100 }] };
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="gprev" id="gPrev" role="img" aria-label="Gradient önizleme"></div>
+      <div class="btns">
+        <button class="btn" id="gRnd" type="button">Rastgele</button>
+        <button class="btn" id="gRev" type="button">Ters çevir</button>
+        <button class="btn" id="gPng" type="button">PNG indir</button>
+      </div>
+      <div class="lbl" style="margin-top:14px">Hazır renk geçişleri</div>
+      <div class="chips" id="gPre" style="flex-wrap:wrap;overflow:visible;padding-top:4px"></div>
+    </div>
+    <div class="panel">
+      <div class="row">
+        <div class="field"><label for="gType">Tür</label><select id="gType"><option value="linear">Doğrusal</option><option value="radial">Dairesel</option><option value="conic">Konik</option></select></div>
+        <div class="field"><label for="gAng">Açı: <span id="gAngV"></span>°</label><input id="gAng" type="range" min="0" max="360"></div>
+      </div>
+      <div class="lbl">Renk durakları</div>
+      <div id="gStops"></div>
+      <div id="gMsg" class="msg" role="alert"></div>
+      <div class="btns"><button class="btn sm" id="gAdd" type="button">+ Renk ekle</button></div>
+      <div class="field" style="margin-top:14px"><label for="gCss">CSS kodu</label><textarea id="gCss" class="mono" readonly style="min-height:90px"></textarea></div>
+      <div class="btns"><button class="btn primary" id="gCopy" type="button">CSS kopyala</button><button class="btn" id="gDl" type="button">CSS indir</button><button class="btn" id="gShare" type="button">Paylaş</button></div>
+    </div>
+  </div>`;
+  const $g = s => $(s, root);
+  const sorted = () => [...st.stops].sort((a, b) => a.p - b.p);
+  const cssVal = () => {
+    const s = sorted().map(x => `${x.c} ${x.p}%`).join(', ');
+    return st.type === 'linear' ? `linear-gradient(${st.angle}deg, ${s})` : st.type === 'radial' ? `radial-gradient(circle at center, ${s})` : `conic-gradient(from ${st.angle}deg at center, ${s})`;
+  };
+  function refresh(keepList) {
+    const g = cssVal();
+    $g('#gPrev').style.background = g;
+    $g('#gCss').value = `background: ${sorted()[0].c};\nbackground: ${g};`;
+    $g('#gAngV').textContent = st.angle; $g('#gAng').value = st.angle; $g('#gAng').disabled = st.type === 'radial';
+    $g('#gType').value = st.type; store.set('grad', st);
+    if (!keepList) drawStops();
+  }
+  function drawStops() {
+    const box = $g('#gStops'); box.textContent = '';
+    st.stops.forEach((s, i) => {
+      const r = document.createElement('div'); r.className = 'stop';
+      const c = document.createElement('input'); c.type = 'color'; c.value = s.c; c.setAttribute('aria-label', `Renk ${i + 1}`);
+      const p = document.createElement('input'); p.type = 'range'; p.min = 0; p.max = 100; p.value = s.p; p.setAttribute('aria-label', `Konum ${i + 1}`);
+      const n = document.createElement('input'); n.type = 'number'; n.min = 0; n.max = 100; n.value = s.p; n.setAttribute('aria-label', `Konum yüzdesi ${i + 1}`);
+      const d = document.createElement('button'); d.type = 'button'; d.className = 'btn sm'; d.textContent = '✕'; d.setAttribute('aria-label', `Rengi sil ${i + 1}`); d.disabled = st.stops.length <= 2;
+      c.oninput = () => { s.c = c.value; refresh(true); };
+      p.oninput = () => { s.p = +p.value; n.value = p.value; refresh(true); };
+      n.oninput = () => { s.p = clamp(+n.value || 0, 0, 100); p.value = s.p; refresh(true); };
+      d.onclick = () => { st.stops.splice(i, 1); refresh(); };
+      r.append(c, p, n, d); box.appendChild(r);
+    });
+  }
+  const rndHex = () => '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+  $g('#gType').onchange = e => { st.type = e.target.value; refresh(true); };
+  $g('#gAng').oninput = e => { st.angle = +e.target.value; refresh(true); };
+  $g('#gAdd').onclick = () => { if (st.stops.length >= 6) return setMsg($g('#gMsg'), 'En fazla 6 renk eklenebilir.', 'err'); setMsg($g('#gMsg'), ''); st.stops.push({ c: rndHex(), p: 100 }); refresh(); };
+  $g('#gRnd').onclick = () => { const n = 2 + Math.floor(Math.random() * 2); st.stops = Array.from({ length: n }, (_, i) => ({ c: rndHex(), p: Math.round(i * 100 / (n - 1)) })); st.angle = Math.floor(Math.random() * 361); refresh(); };
+  $g('#gRev').onclick = () => { st.stops = st.stops.map(s => ({ c: s.c, p: 100 - s.p })).reverse(); refresh(); };
+  PRESETS.forEach(([name, type, angle, cols]) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = name;
+    b.onclick = () => { st = { type, angle, stops: cols.map((c, i) => ({ c, p: Math.round(i * 100 / (cols.length - 1)) })) }; setMsg($g('#gMsg'), ''); refresh(); };
+    $g('#gPre').appendChild(b);
+  });
+  $g('#gCopy').onclick = () => copyText($g('#gCss').value, 'CSS kodu kopyalandı');
+  $g('#gDl').onclick = () => downloadText($g('#gCss').value, 'tektik-gradient.css', 'text/css');
+  $g('#gShare').onclick = () => share({ title: 'TekTık CSS gradient', text: $g('#gCss').value });
+  $g('#gPng').onclick = () => {
+    const W = 1600, H = 900, c = document.createElement('canvas'); c.width = W; c.height = H; const x = c.getContext('2d'); let g;
+    const a = st.angle * Math.PI / 180;
+    if (st.type === 'linear') { const len = Math.abs(W * Math.sin(a)) + Math.abs(H * Math.cos(a)), dx = Math.sin(a) * len / 2, dy = -Math.cos(a) * len / 2; g = x.createLinearGradient(W / 2 - dx, H / 2 - dy, W / 2 + dx, H / 2 + dy); }
+    else if (st.type === 'radial') g = x.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, Math.hypot(W / 2, H / 2));
+    else { if (!x.createConicGradient) return toast('Tarayıcınız konik gradient indirmeyi desteklemiyor.', 'err'); g = x.createConicGradient((st.angle - 90) * Math.PI / 180, W / 2, H / 2); }
+    sorted().forEach(s => g.addColorStop(s.p / 100, s.c)); x.fillStyle = g; x.fillRect(0, 0, W, H);
+    c.toBlob(b => { if (b) { downloadBlob(b, 'tektik-gradient.png'); toast('PNG indirildi'); } else toast('Görsel oluşturulamadı.', 'err'); });
+  };
+  refresh();
+}
+
+/* ---------- 7) GÖRSEL SIKIŞTIRICI VE BOYUTLANDIRICI ---------- */
+function toolImage(root) {
+  root.innerHTML = `
+  <div class="panel">
+    <div id="iDrop" class="drop" tabindex="0" role="button" aria-label="Görsel seçmek için dokunun veya sürükleyip bırakın">
+      ${icon('upload')}<div><b>Görsel seçin</b></div><p>veya buraya sürükleyip bırakın · JPG, PNG, WebP, GIF, BMP</p>
+      <input id="iFile" type="file" accept="image/*" hidden>
+    </div>
+    <div id="iMsg" class="msg" role="alert"></div>
+  </div>
+  <div id="iWork" hidden>
+    <div class="split">
+      <div class="panel">
+        <div class="stats" id="iOrig"></div>
+        <div class="row" style="margin-top:14px">
+          <div class="field"><label for="iW">Genişlik (px)</label><input id="iW" type="number" inputmode="numeric" min="1" max="8000"></div>
+          <div class="field"><label for="iH">Yükseklik (px)</label><input id="iH" type="number" inputmode="numeric" min="1" max="8000"></div>
+        </div>
+        <label class="check"><input id="iLock" type="checkbox" checked> En-boy oranını koru</label>
+        <div class="lbl" style="margin-top:10px">Hızlı ölçek</div>
+        <div class="chips" style="padding-top:2px;flex-wrap:wrap;overflow:visible" id="iScale"></div>
+        <div class="row" style="margin-top:12px">
+          <div class="field"><label for="iFmt">Biçim</label><select id="iFmt"><option value="image/jpeg">JPEG (en küçük)</option><option value="image/webp">WebP (modern)</option><option value="image/png">PNG (kayıpsız)</option></select></div>
+          <div class="field"><label for="iQ">Kalite: <span id="iQV">80</span>%</label><input id="iQ" type="range" min="1" max="100" value="80"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <img id="iPrev" class="imgprev" alt="Önizleme" hidden>
+        <div class="stats" id="iRes"></div>
+        <div id="iNote" class="msg" role="status"></div>
+        <div class="btns"><button class="btn primary" id="iDl" type="button" disabled>İndir</button><button class="btn" id="iShare" type="button" disabled>Paylaş</button><button class="btn" id="iNew" type="button">Yeni görsel</button></div>
+      </div>
+    </div>
+  </div>`;
+  const $i = s => $(s, root);
+  let img = null, file = null, outBlob = null, objUrl = null, prevUrl = null, token = 0, ratio = 1;
+  const msg = $i('#iMsg'), drop = $i('#iDrop');
+  const revoke = u => { if (u) URL.revokeObjectURL(u); };
+  const stat = (v, l) => `<div class="stat"><b>${esc(v)}</b><span>${l}</span></div>`;
+  function load(f) {
+    setMsg(msg, '');
+    if (!f) return;
+    if (!f.type.startsWith('image/')) return setMsg(msg, 'Lütfen geçerli bir görsel dosyası seçin (JPG, PNG, WebP, GIF, BMP).', 'err');
+    if (f.size > 40 * 1048576) return setMsg(msg, 'Dosya çok büyük. En fazla 40 MB boyutunda görsel seçin.', 'err');
+    const u = URL.createObjectURL(f), im = new Image();
+    im.onload = () => {
+      if (!im.naturalWidth || !im.naturalHeight) { revoke(u); return setMsg(msg, 'Görselin boyutları okunamadı.', 'err'); }
+      revoke(objUrl); objUrl = u; img = im; file = f; ratio = im.naturalWidth / im.naturalHeight;
+      $i('#iWork').hidden = false;
+      $i('#iW').value = im.naturalWidth; $i('#iH').value = im.naturalHeight;
+      $i('#iOrig').innerHTML = stat(f.name.length > 18 ? f.name.slice(0, 15) + '…' : f.name, 'Dosya') + stat(fmtBytes(f.size), 'Orijinal boyut') + stat(`${im.naturalWidth}×${im.naturalHeight}`, 'Orijinal piksel');
+      const isPng = f.type === 'image/png'; $i('#iFmt').value = isPng ? 'image/png' : 'image/jpeg';
+      process();
+    };
+    im.onerror = () => { revoke(u); setMsg(msg, 'Bu görsel açılamadı. Dosya bozuk veya desteklenmeyen bir biçimde olabilir.', 'err'); };
+    im.src = u;
+  }
+  async function process() {
+    if (!img) return;
+    const w = Math.round(+$i('#iW').value), h = Math.round(+$i('#iH').value), note = $i('#iNote');
+    if (!(w >= 1 && h >= 1 && w <= 8000 && h <= 8000)) { setMsg(note, 'Genişlik ve yükseklik 1 ile 8000 piksel arasında olmalıdır.', 'err'); $i('#iDl').disabled = $i('#iShare').disabled = true; return; }
+    const my = ++token, fmt = $i('#iFmt').value, q = +$i('#iQ').value / 100;
+    $i('#iQ').disabled = fmt === 'image/png';
+    setMsg(note, 'İşleniyor…');
+    await new Promise(r => setTimeout(r, 15));
+    let blob = null;
+    try {
+      const c = document.createElement('canvas'); c.width = w; c.height = h;
+      const ctx = c.getContext('2d');
+      if (fmt === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); }
+      ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, w, h);
+      blob = await new Promise(res => c.toBlob(res, fmt, q));
+    } catch { blob = null; }
+    if (my !== token) return;
+    if (!blob) { outBlob = null; $i('#iDl').disabled = $i('#iShare').disabled = true; return setMsg(note, 'Görsel bu boyutta işlenemedi. Daha küçük bir boyut deneyin.', 'err'); }
+    outBlob = blob; revoke(prevUrl); prevUrl = URL.createObjectURL(blob);
+    const pv = $i('#iPrev'); pv.src = prevUrl; pv.hidden = false;
+    const diff = Math.round((1 - blob.size / file.size) * 100);
+    $i('#iRes').innerHTML = stat(fmtBytes(blob.size), 'Yeni boyut') + stat(`${w}×${h}`, 'Yeni piksel') + stat((diff >= 0 ? '−%' : '+%') + Math.abs(diff), diff >= 0 ? 'Tasarruf' : 'Artış');
+    let text = '', type = 'ok';
+    if (blob.type !== fmt) { text = 'Tarayıcınız seçilen biçimi desteklemiyor; PNG olarak üretildi.'; type = 'warn'; }
+    else if (diff < 0) { text = 'Dosya boyutu arttı. Kaliteyi düşürmeyi, JPEG/WebP seçmeyi veya boyutu küçültmeyi deneyin.'; type = 'warn'; }
+    else text = 'Hazır. Görsel cihazınızdan hiçbir yere gönderilmedi.';
+    setMsg(note, text, type); $i('#iDl').disabled = $i('#iShare').disabled = false;
+  }
+  const schedule = debounce(process, 250);
+  const ext = b => b.type === 'image/jpeg' ? 'jpg' : b.type === 'image/webp' ? 'webp' : 'png';
+  const outName = () => (file.name.replace(/\.[^.]+$/, '') || 'gorsel') + '-tektik.' + ext(outBlob);
+  drop.addEventListener('click', () => $i('#iFile').click());
+  drop.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $i('#iFile').click(); } });
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.classList.add('over'); });
+  drop.addEventListener('dragleave', () => drop.classList.remove('over'));
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.classList.remove('over'); load(e.dataTransfer.files[0]); });
+  $i('#iFile').addEventListener('change', e => { load(e.target.files[0]); e.target.value = ''; });
+  $i('#iW').addEventListener('input', () => { if ($i('#iLock').checked && +$i('#iW').value > 0) $i('#iH').value = Math.max(1, Math.round($i('#iW').value / ratio)); schedule(); });
+  $i('#iH').addEventListener('input', () => { if ($i('#iLock').checked && +$i('#iH').value > 0) $i('#iW').value = Math.max(1, Math.round($i('#iH').value * ratio)); schedule(); });
+  $i('#iFmt').addEventListener('change', process);
+  $i('#iQ').addEventListener('input', () => { $i('#iQV').textContent = $i('#iQ').value; schedule(); });
+  [100, 75, 50, 25].forEach(p => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = '%' + p;
+    b.onclick = () => { if (!img) return; $i('#iW').value = Math.max(1, Math.round(img.naturalWidth * p / 100)); $i('#iH').value = Math.max(1, Math.round(img.naturalHeight * p / 100)); process(); };
+    $i('#iScale').appendChild(b);
+  });
+  $i('#iDl').onclick = () => { if (outBlob) { downloadBlob(outBlob, outName()); toast('Görsel indirildi'); } };
+  $i('#iShare').onclick = () => { if (outBlob) share({ title: 'TekTık görsel', files: [new File([outBlob], outName(), { type: outBlob.type })] }); };
+  $i('#iNew').onclick = () => $i('#iFile').click();
+  return () => { revoke(objUrl); revoke(prevUrl); token++; };
+}
+
+/* ---------- 8) BİRİM DÖNÜŞTÜRÜCÜ ---------- */
+function toolUnits(root) {
+  const U = {
+    length: ['Uzunluk', { mm: ['Milimetre (mm)', .001], cm: ['Santimetre (cm)', .01], m: ['Metre (m)', 1], km: ['Kilometre (km)', 1000], in: ['İnç (in)', .0254], ft: ['Fit (ft)', .3048], yd: ['Yarda (yd)', .9144], mi: ['Mil (mi)', 1609.344], nmi: ['Deniz mili', 1852] }],
+    mass: ['Ağırlık', { mg: ['Miligram (mg)', 1e-6], g: ['Gram (g)', .001], kg: ['Kilogram (kg)', 1], t: ['Ton (t)', 1000], oz: ['Ons (oz)', .028349523125], lb: ['Pound (lb)', .45359237] }],
+    temp: ['Sıcaklık', { c: ['Santigrat (°C)'], f: ['Fahrenheit (°F)'], k: ['Kelvin (K)'] }],
+    volume: ['Hacim', { ml: ['Mililitre (ml)', .001], l: ['Litre (L)', 1], m3: ['Metreküp (m³)', 1000], tsp: ['Çay kaşığı (ABD)', .00492892159375], tbsp: ['Yemek kaşığı (ABD)', .01478676478125], cup: ['Su bardağı (ABD)', .2365882365], floz: ['Sıvı ons (ABD)', .0295735295625], gal: ['Galon (ABD)', 3.785411784] }],
+    area: ['Alan', { cm2: ['Santimetrekare (cm²)', 1e-4], m2: ['Metrekare (m²)', 1], don: ['Dönüm', 1000], ha: ['Hektar (ha)', 10000], km2: ['Kilometrekare (km²)', 1e6], ft2: ['Fitkare (ft²)', .09290304], ac: ['Akre (ac)', 4046.8564224] }],
+    speed: ['Hız', { ms: ['Metre/saniye (m/s)', 1], kmh: ['Kilometre/saat (km/sa)', 1 / 3.6], mph: ['Mil/saat (mph)', .44704], kn: ['Knot (deniz mili/sa)', 1852 / 3600] }],
+    data: ['Veri', { bit: ['Bit', .125], b: ['Bayt (B)', 1], kb: ['Kilobayt (KB = 1024 B)', 1024], mb: ['Megabayt (MB)', 1048576], gb: ['Gigabayt (GB)', 1073741824], tb: ['Terabayt (TB)', 1099511627776] }],
+    time: ['Zaman', { ms: ['Milisaniye (ms)', .001], s: ['Saniye (sn)', 1], min: ['Dakika (dk)', 60], h: ['Saat (sa)', 3600], d: ['Gün', 86400], wk: ['Hafta', 604800], yr: ['Yıl (365 gün)', 31536000] }]
+  };
+  const toC = (u, v) => u === 'c' ? v : u === 'f' ? (v - 32) * 5 / 9 : v - 273.15;
+  const fromC = (u, v) => u === 'c' ? v : u === 'f' ? v * 9 / 5 + 32 : v + 273.15;
+  function convert(cat, from, to, v) {
+    if (cat === 'temp') { const c = toC(from, v); if (c < -273.15 - 1e-9) throw new Error('Sıcaklık mutlak sıfırın (−273,15 °C) altında olamaz.'); return fromC(to, c); }
+    const u = U[cat][1]; return v * u[from][1] / u[to][1];
+  }
+  function parseNum(s) {
+    s = String(s).trim().replace(/\s/g, ''); if (!s) return NaN;
+    if (s.includes(',') && s.includes('.')) { s = s.lastIndexOf(',') > s.lastIndexOf('.') ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, ''); }
+    else s = s.replace(',', '.');
+    return /^[-+]?(\d+\.?\d*|\.\d+)(e[-+]?\d+)?$/i.test(s) ? Number(s) : NaN;
+  }
+  const fmt = n => { n = Number(n.toPrecision(12)); if (n === 0) return '0'; const a = Math.abs(n); return (a >= 1e15 || a < 1e-6) ? n.toExponential(6).replace('.', ',') : new Intl.NumberFormat('tr-TR', { maximumSignificantDigits: 10 }).format(n); };
+  const prefs = Object.assign({ cat: 'length', from: 'm', to: 'km', val: '1' }, store.get('units', {}));
+  if (!U[prefs.cat]) { prefs.cat = 'length'; prefs.from = 'm'; prefs.to = 'km'; }
+  root.innerHTML = `
+  <div class="split wide-left">
+    <div class="panel">
+      <div class="field"><label for="uCat">Kategori</label><select id="uCat">${Object.entries(U).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('')}</select></div>
+      <div class="field"><label for="uVal">Değer</label><input id="uVal" inputmode="decimal" autocomplete="off" placeholder="Örn. 12,5"></div>
+      <div class="row"><div class="field"><label for="uFrom">Birimden</label><select id="uFrom"></select></div><div class="field"><label for="uTo">Birime</label><select id="uTo"></select></div></div>
+      <div class="btns"><button class="btn" id="uSwap" type="button">⇄ Yer değiştir</button></div>
+      <div id="uMsg" class="msg" role="alert"></div>
+      <div class="lbl" style="margin-top:8px">Sonuç</div>
+      <div class="convres" id="uRes" aria-live="polite">—</div>
+      <div class="btns"><button class="btn primary" id="uCopy" type="button">Sonucu kopyala</button><button class="btn" id="uShare" type="button">Paylaş</button></div>
+    </div>
+    <div class="panel"><div class="lbl">Tüm birimlere dönüşüm</div><table class="table" id="uAll"></table></div>
+  </div>`;
+  const $u = s => $(s, root);
+  let resText = '';
+  function fillUnits() {
+    const opts = Object.entries(U[prefs.cat][1]).map(([k, v]) => `<option value="${k}">${v[0]}</option>`).join('');
+    $u('#uFrom').innerHTML = opts; $u('#uTo').innerHTML = opts;
+    const keys = Object.keys(U[prefs.cat][1]);
+    if (!keys.includes(prefs.from)) prefs.from = keys[0]; if (!keys.includes(prefs.to)) prefs.to = keys[1] || keys[0];
+    $u('#uFrom').value = prefs.from; $u('#uTo').value = prefs.to;
+  }
+  function calc() {
+    prefs.cat = $u('#uCat').value; prefs.from = $u('#uFrom').value; prefs.to = $u('#uTo').value; prefs.val = $u('#uVal').value; store.set('units', prefs);
+    const msg = $u('#uMsg'), tbl = $u('#uAll'); tbl.textContent = '';
+    const raw = $u('#uVal').value; setMsg(msg, ''); resText = '';
+    if (!raw.trim()) { $u('#uRes').textContent = '—'; return; }
+    const v = parseNum(raw);
+    if (!Number.isFinite(v)) { $u('#uRes').textContent = '—'; return setMsg(msg, 'Lütfen geçerli bir sayı girin. Örnek: 12,5', 'err'); }
+    try {
+      const r = convert(prefs.cat, prefs.from, prefs.to, v), un = U[prefs.cat][1];
+      resText = `${fmt(v)} ${un[prefs.from][0]} = ${fmt(r)} ${un[prefs.to][0]}`;
+      $u('#uRes').textContent = fmt(r) + ' ' + un[prefs.to][0].replace(/^.*\((.*?)\).*$/, '$1');
+      Object.keys(un).forEach(k => { const tr = tbl.insertRow(); tr.insertCell().textContent = un[k][0]; tr.insertCell().textContent = fmt(convert(prefs.cat, prefs.from, k, v)); });
+    } catch (e) { $u('#uRes').textContent = '—'; setMsg(msg, e.message, 'err'); }
+  }
+  $u('#uCat').value = prefs.cat; fillUnits(); $u('#uVal').value = prefs.val;
+  $u('#uCat').addEventListener('change', () => { prefs.cat = $u('#uCat').value; fillUnits(); calc(); });
+  ['#uFrom', '#uTo'].forEach(s => $u(s).addEventListener('change', calc));
+  $u('#uVal').addEventListener('input', calc);
+  $u('#uSwap').onclick = () => { const a = $u('#uFrom').value; $u('#uFrom').value = $u('#uTo').value; $u('#uTo').value = a; calc(); };
+  $u('#uCopy').onclick = () => copyText(resText);
+  $u('#uShare').onclick = () => resText ? share({ title: 'TekTık birim dönüşümü', text: resText }) : toast('Paylaşılacak sonuç yok.', 'err');
+  calc();
+}
+
+/* ---------- 9) ŞİFRE GÜCÜ KONTROL ARACI ---------- */
+function toolPassword(root) {
+  const COMMON = ['123456', '12345678', '123456789', '1234567', '12345', '1234', '654321', '000000', '111111', '123123', '123321', '5555', 'password', 'passw0rd', 'qwerty', 'qwerty123', 'abc123', 'abcd1234', '1q2w3e', '1q2w3e4r', 'asdfgh', 'zxcvbn', 'admin', 'welcome', 'letmein', 'iloveyou', 'dragon', 'monkey', 'football', 'master', 'login', 'test', 'sifre', 'sifrem', 'parola', 'merhaba', 'sevgilim', 'askim', 'canim', 'sevgi', 'ailem', 'kralbenim', 'istanbul', 'ankara', 'izmir', 'turkiye', 'galatasaray', 'fenerbahce', 'besiktas', 'trabzonspor', 'ataturk', '1453', '1923'];
+  const ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm', '1234567890', 'qazwsxedc'];
+  const COMMON_SET = new Set(COMMON);
+  function analyze(pw) {
+    const lower = /[a-zçğıöşü]/.test(pw), upper = /[A-ZÇĞİÖŞÜ]/.test(pw), digit = /\d/.test(pw), sym = /[^A-Za-z0-9çğıöşüÇĞİÖŞÜ\s]/.test(pw), space = /\s/.test(pw), other = /[^\x00-\x7F]/.test(pw.replace(/[çğıöşüÇĞİÖŞÜ]/g, ''));
+    const pool = (lower ? 26 : 0) + (upper ? 26 : 0) + (digit ? 10 : 0) + (sym ? 33 : 0) + (space ? 1 : 0) + (other ? 100 : 0) + (/[çğıöşüÇĞİÖŞÜ]/.test(pw) ? 12 : 0);
+    const n = norm(pw), base = n.replace(/[\d\W_]+$/, '');
+    const common = COMMON_SET.has(n) || (base && COMMON_SET.has(base)) || COMMON.some(w => w.length >= 5 && n.includes(w) && n.length - w.length <= 4);
+    let runs = 0, seq = 0;
+    for (let i = 0; i < n.length;) { let j = i; while (j + 1 < n.length && n[j + 1] === n[i]) j++; if (j - i + 1 >= 3) runs += j - i; i = j + 1; }
+    for (let i = 0; i + 2 < n.length; i++) {
+      const a = n.charCodeAt(i), b = n.charCodeAt(i + 1), c = n.charCodeAt(i + 2);
+      if ((b - a === 1 && c - b === 1) || (a - b === 1 && b - c === 1)) { seq++; continue; }
+      const t = n.slice(i, i + 3);
+      if (ROWS.some(r => r.includes(t) || r.split('').reverse().join('').includes(t))) seq++;
+    }
+    const uniq = new Set(n).size;
+    let ent = pw.length * Math.log2(Math.max(pool, 2));
+    ent -= runs * Math.log2(Math.max(pool, 2)) * .9; ent -= Math.min(seq, 6) * 5;
+    if (n.length && uniq < n.length / 2) ent *= .8;
+    if (common) ent = Math.min(ent, 12);
+    ent = Math.max(0, ent);
+    const score = !pw ? -1 : ent < 28 ? 0 : ent < 36 ? 1 : ent < 60 ? 2 : ent < 80 ? 3 : 4;
+    return { len: pw.length, lower, upper, digit, sym: sym || space, common, runs, seq, ent, score, pool };
+  }
+  function crack(ent) {
+    const s = Math.pow(2, ent) / 2 / 1e10;
+    if (s < 1) return 'bir saniyeden kısa'; if (s < 60) return Math.round(s) + ' saniye'; if (s < 3600) return Math.round(s / 60) + ' dakika';
+    if (s < 86400) return Math.round(s / 3600) + ' saat'; if (s < 2592000) return Math.round(s / 86400) + ' gün'; if (s < 31536000) return Math.round(s / 2592000) + ' ay';
+    const y = s / 31536000; if (y < 1000) return Math.round(y) + ' yıl'; if (y < 1e6) return fmtNum(Math.round(y / 1000)) + ' bin yıl';
+    if (y < 1e9) return fmtNum(Math.round(y / 1e6)) + ' milyon yıl'; if (y < 1e12) return fmtNum(Math.round(y / 1e9)) + ' milyar yıl'; return 'evrenin yaşından uzun';
+  }
+  const LABELS = ['Çok zayıf', 'Zayıf', 'Orta', 'Güçlü', 'Çok güçlü'], COLORS = ['var(--danger)', 'var(--danger)', 'var(--warn)', 'var(--ok)', 'var(--ok)'];
+  const randInt = n => { const max = Math.floor(0x100000000 / n) * n; let x; do { x = crypto.getRandomValues(new Uint32Array(1))[0]; } while (x >= max); return x % n; };
+  root.innerHTML = `
+  <div class="split">
+    <div class="panel">
+      <div class="field"><label for="pwIn">Şifrenizi yazın</label>
+        <div class="pw"><input id="pwIn" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Şifre"><button class="btn sm" id="pwShow" type="button" aria-pressed="false">Göster</button></div></div>
+      <div class="msg" style="min-height:0">🔒 Şifreniz yalnızca tarayıcınızda değerlendirilir; hiçbir yere gönderilmez veya kaydedilmez.</div>
+      <div class="meter" role="meter" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Şifre gücü" id="pwMeter"><i id="pwBar"></i></div>
+      <div><b id="pwLabel">Şifre girin</b> <span class="lbl" id="pwEnt"></span></div>
+      <div class="msg" id="pwCrack"></div>
+      <ul class="checks" id="pwChecks"></ul>
+      <div class="msg" id="pwTips"></div>
+    </div>
+    <div class="panel">
+      <div class="lbl">Güçlü şifre oluşturucu</div>
+      <div class="field"><label for="gLen">Uzunluk: <span id="gLenV">16</span></label><input id="gLen" type="range" min="8" max="64" value="16"></div>
+      <label class="check"><input type="checkbox" id="gLow" checked> Küçük harf</label>
+      <label class="check"><input type="checkbox" id="gUp" checked> Büyük harf</label>
+      <label class="check"><input type="checkbox" id="gDig" checked> Rakam</label>
+      <label class="check"><input type="checkbox" id="gSym" checked> Sembol</label>
+      <label class="check"><input type="checkbox" id="gAmb"> Benzer karakterleri çıkar (0 O 1 l I)</label>
+      <div id="gMsg" class="msg" role="alert"></div>
+      <div class="btns"><button class="btn primary" id="gGen" type="button">Oluştur ve kontrol et</button><button class="btn" id="gCopy" type="button">Şifreyi kopyala</button></div>
+    </div>
+  </div>`;
+  const $p = s => $(s, root), inp = $p('#pwIn');
+  function update() {
+    const a = analyze(inp.value), bar = $p('#pwBar'), checks = $p('#pwChecks'), tips = $p('#pwTips');
+    checks.textContent = ''; tips.textContent = '';
+    $p('#pwMeter').setAttribute('aria-valuenow', Math.max(0, a.score));
+    if (a.score < 0) { bar.style.width = '0'; $p('#pwLabel').textContent = 'Şifre girin'; $p('#pwEnt').textContent = ''; $p('#pwCrack').textContent = ''; return; }
+    bar.style.width = ((a.score + 1) * 20) + '%'; bar.style.background = COLORS[a.score];
+    $p('#pwLabel').textContent = LABELS[a.score]; $p('#pwEnt').textContent = `≈ ${Math.round(a.ent)} bit`;
+    $p('#pwCrack').className = 'msg'; $p('#pwCrack').textContent = `Hızlı bir saldırıda tahmini kırılma süresi: ${crack(a.ent)}`;
+    const list = [[a.len >= 12, 'En az 12 karakter'], [a.lower, 'Küçük harf'], [a.upper, 'Büyük harf'], [a.digit, 'Rakam'], [a.sym, 'Sembol'], [!a.common, 'Yaygın bir şifre/kelime değil'], [a.runs === 0, 'Tekrarlayan karakter yok'], [a.seq === 0, 'Ardışık / klavye dizisi yok']];
+    list.forEach(([ok, t]) => { const li = document.createElement('li'); li.className = ok ? 'ok' : ''; const b = document.createElement('b'); b.textContent = ok ? '✓' : '✗'; li.append(b, document.createTextNode(t)); checks.appendChild(li); });
+    const tp = []; if (a.common) tp.push('Bu şifre ya da kalıbı çok yaygın; tamamen farklı bir şifre seçin.'); if (a.len < 12) tp.push('Uzunluğu artırmak gücü en çok yükselten adımdır.'); if (a.seq) tp.push('123, abc ya da qwe gibi dizilerden kaçının.'); if (a.runs) tp.push('Aynı karakteri art arda tekrarlamayın.');
+    tips.textContent = tp.join(' ');
+  }
+  inp.addEventListener('input', update);
+  $p('#pwShow').onclick = e => { const h = inp.type === 'password'; inp.type = h ? 'text' : 'password'; e.target.textContent = h ? 'Gizle' : 'Göster'; e.target.setAttribute('aria-pressed', String(h)); };
+  $p('#gLen').addEventListener('input', () => { $p('#gLenV').textContent = $p('#gLen').value; });
+  $p('#gGen').onclick = () => {
+    const amb = $p('#gAmb').checked, rm = s => amb ? s.replace(/[0O1lI]/g, '') : s;
+    const sets = [];
+    if ($p('#gLow').checked) sets.push(rm('abcdefghijklmnopqrstuvwxyz'));
+    if ($p('#gUp').checked) sets.push(rm('ABCDEFGHIJKLMNOPQRSTUVWXYZ'));
+    if ($p('#gDig').checked) sets.push(rm('0123456789'));
+    if ($p('#gSym').checked) sets.push('!@#$%^&*()-_=+[]{};:,.?/');
+    if (!sets.length) return setMsg($p('#gMsg'), 'En az bir karakter türü seçin.', 'err');
+    setMsg($p('#gMsg'), '');
+    const len = +$p('#gLen').value, all = sets.join(''), chars = sets.map(s => s[randInt(s.length)]);
+    while (chars.length < len) chars.push(all[randInt(all.length)]);
+    for (let i = chars.length - 1; i > 0; i--) { const j = randInt(i + 1); [chars[i], chars[j]] = [chars[j], chars[i]]; }
+    inp.value = chars.slice(0, len).join(''); inp.type = 'text'; $p('#pwShow').textContent = 'Gizle'; $p('#pwShow').setAttribute('aria-pressed', 'true'); update();
+  };
+  $p('#gCopy').onclick = () => copyText(inp.value, 'Şifre kopyalandı');
+  update();
+}
+
+/* ---------- 10) YEREL NOT DEFTERİ ---------- */
+function toolNotes(root) {
+  let notes = store.get('notes', []); if (!Array.isArray(notes)) notes = [];
+  notes = notes.filter(n => n && typeof n.id === 'string').map(n => ({ id: n.id, title: String(n.title || ''), body: String(n.body || ''), t: +n.t || Date.now() }));
+  let cur = store.get('notesCur', null), q = '';
+  root.innerHTML = `
+  <div class="notes-layout">
+    <div class="panel">
+      <div class="btns" style="margin:0 0 10px"><button class="btn primary" id="nNew" type="button">+ Yeni not</button></div>
+      <input id="nSearch" type="search" placeholder="Notlarda ara…" aria-label="Notlarda ara" autocomplete="off">
+      <ul class="nlist" id="nList"></ul>
+      <div class="btns"><button class="btn sm" id="nExp" type="button">Dışa aktar</button><button class="btn sm" id="nImp" type="button">İçe aktar</button><input id="nFile" type="file" accept="application/json,.json" hidden></div>
+      <div id="nMsg" class="msg" role="alert"></div>
+    </div>
+    <div class="panel">
+      <div id="nEmpty" class="empty">Henüz not yok. Başlamak için <b>Yeni not</b> düğmesine dokunun.</div>
+      <div id="nEd" hidden>
+        <div class="field"><label for="nTitle">Başlık</label><input id="nTitle" maxlength="120" autocomplete="off" placeholder="Başlık"></div>
+        <div class="field"><label for="nBody">Not</label><textarea id="nBody" style="min-height:260px" placeholder="Notunuzu yazın… Değişiklikler otomatik kaydedilir."></textarea></div>
+        <div class="lbl" id="nStat" role="status" aria-live="polite"></div>
+        <div class="btns"><button class="btn" id="nCopy" type="button">Kopyala</button><button class="btn" id="nDl" type="button">İndir (.txt)</button><button class="btn" id="nShare" type="button">Paylaş</button><button class="btn" id="nDel" type="button">Sil</button></div>
+      </div>
+    </div>
+  </div>`;
+  const $n = s => $(s, root), msg = $n('#nMsg');
+  const find = () => notes.find(n => n.id === cur);
+  const label = n => n.title.trim() || n.body.trim().split('\n')[0].slice(0, 60) || 'Başlıksız not';
+  function persist() {
+    const ok = store.set('notes', notes); store.set('notesCur', cur);
+    if (!ok) { setMsg(msg, 'Notlar kaydedilemedi: tarayıcı depolaması kullanılamıyor (gizli mod veya dolu depolama olabilir).', 'err'); return false; }
+    setMsg(msg, ''); return true;
+  }
+  function renderList() {
+    const ul = $n('#nList'); ul.textContent = '';
+    const nq = norm(q), list = [...notes].sort((a, b) => b.t - a.t).filter(n => !nq || norm(n.title + ' ' + n.body).includes(nq));
+    if (!list.length) { const li = document.createElement('li'); li.className = 'lbl'; li.textContent = q ? 'Eşleşen not bulunamadı.' : ''; ul.appendChild(li); }
+    list.forEach(n => {
+      const li = document.createElement('li'), b = document.createElement('button'), t = document.createElement('b'), s = document.createElement('small');
+      b.type = 'button'; if (n.id === cur) b.setAttribute('aria-current', 'true');
+      t.textContent = label(n); s.textContent = new Date(n.t).toLocaleString('tr-TR', { dateStyle: 'medium', timeStyle: 'short' });
+      b.append(t, s); b.onclick = () => { cur = n.id; store.set('notesCur', cur); renderAll(true); }; li.appendChild(b); ul.appendChild(li);
+    });
+  }
+  function renderEditor(focus) {
+    const n = find(); $n('#nEmpty').hidden = !!n; $n('#nEd').hidden = !n;
+    if (n) { $n('#nTitle').value = n.title; $n('#nBody').value = n.body; $n('#nStat').textContent = 'Son değişiklik: ' + new Date(n.t).toLocaleString('tr-TR', { dateStyle: 'medium', timeStyle: 'short' }); if (focus) $n('#nBody').focus({ preventScroll: false }); }
+  }
+  function renderAll(focus) { if (!find()) cur = notes.length ? [...notes].sort((a, b) => b.t - a.t)[0].id : null; renderList(); renderEditor(focus); }
+  const save = debounce(() => {
+    const n = find(); if (!n) return; n.title = $n('#nTitle').value; n.body = $n('#nBody').value; n.t = Date.now();
+    if (persist()) $n('#nStat').textContent = 'Kaydedildi · ' + new Date(n.t).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    renderList();
+  }, 350);
+  $n('#nTitle').addEventListener('input', save); $n('#nBody').addEventListener('input', save);
+  $n('#nSearch').addEventListener('input', e => { q = e.target.value; renderList(); });
+  $n('#nNew').onclick = () => { const n = { id: uid(), title: '', body: '', t: Date.now() }; notes.push(n); cur = n.id; persist(); renderAll(true); $n('#nTitle').focus(); };
+  $n('#nDel').onclick = () => { const n = find(); if (!n) return; if (!confirm('Bu not kalıcı olarak silinsin mi?')) return; notes = notes.filter(x => x.id !== n.id); cur = null; persist(); renderAll(); toast('Not silindi'); };
+  const text = () => { const n = find(); return n ? (n.title ? n.title + '\n\n' : '') + n.body : ''; };
+  $n('#nCopy').onclick = () => copyText(text());
+  $n('#nDl').onclick = () => downloadText(text(), (find() ? (norm(label(find())).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'not') : 'not') + '.txt');
+  $n('#nShare').onclick = () => text() ? share({ title: label(find()), text: text() }) : toast('Paylaşılacak içerik yok.', 'err');
+  $n('#nExp').onclick = () => notes.length ? downloadText(JSON.stringify({ app: 'TekTık', notes }, null, 2), 'tektik-notlar.json', 'application/json') : toast('Dışa aktarılacak not yok.', 'err');
+  $n('#nImp').onclick = () => $n('#nFile').click();
+  $n('#nFile').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = ''; if (!f) return;
+    try {
+      const data = JSON.parse(await f.text()), arr = Array.isArray(data) ? data : data.notes;
+      if (!Array.isArray(arr)) throw new Error('x');
+      const add = arr.filter(n => n && (typeof n.body === 'string' || typeof n.title === 'string')).map(n => ({ id: uid(), title: String(n.title || ''), body: String(n.body || ''), t: +n.t || Date.now() }));
+      if (!add.length) throw new Error('x');
+      notes.push(...add); persist(); renderAll(); toast(add.length + ' not içe aktarıldı');
+    } catch { setMsg(msg, 'İçe aktarılamadı. Lütfen TekTık\'tan dışa aktarılmış geçerli bir .json dosyası seçin.', 'err'); }
+  });
+  renderAll();
+}
+
+/* =========================================================
+   ARAÇ KAYDI
+   tier:'free' | 'premium' → ileride premium özellikler için hazır
+   ========================================================= */
+const CATS = ['Metin', 'Geliştirici', 'Tasarım', 'Görsel', 'Hesaplama', 'Güvenlik'];
+const TOOLS = [
+  { id: 'qr', name: 'QR Kod Oluşturucu', desc: 'Metin, bağlantı, Wi-Fi, e-posta ve telefon için QR kod üretin.', cat: 'Görsel', icon: 'qr', popular: true, tier: 'free', kw: 'qr karekod barkod wifi', render: toolQr },
+  { id: 'sayac', name: 'Kelime ve Karakter Sayacı', desc: 'Kelime, karakter, cümle ve okuma süresini anında görün.', cat: 'Metin', icon: 'count', popular: true, tier: 'free', kw: 'say sayaç harf karakter kelime', render: toolCount },
+  { id: 'metin', name: 'Metin Dönüştürücü', desc: 'Büyük/küçük harf, slug, Base64, URL kodlama ve satır araçları.', cat: 'Metin', icon: 'text', tier: 'free', kw: 'büyük küçük harf base64 slug kodlama', render: toolText },
+  { id: 'json', name: 'JSON Biçimlendirici', desc: 'JSON metnini biçimlendirin, küçültün ve hatalarını bulun.', cat: 'Geliştirici', icon: 'json', popular: true, tier: 'free', kw: 'json doğrula format minify geliştirici', render: toolJson },
+  { id: 'renk', name: 'HEX ⇄ RGB Renk Dönüştürücü', desc: 'HEX, RGB ve HSL arasında dönüştürün, kontrastı ölçün.', cat: 'Tasarım', icon: 'color', tier: 'free', kw: 'renk hex rgb hsl kontrast', render: toolColor },
+  { id: 'gradient', name: 'CSS Gradient Oluşturucu', desc: 'Doğrusal, dairesel ve konik gradient üretin; CSS\'i kopyalayın.', cat: 'Tasarım', icon: 'gradient', tier: 'free', kw: 'css gradyan renk geçişi arka plan', render: toolGradient },
+  { id: 'gorsel', name: 'Görsel Sıkıştırıcı ve Boyutlandırıcı', desc: 'Görselleri tarayıcıda küçültün, boyutlandırın, biçim değiştirin.', cat: 'Görsel', icon: 'image', popular: true, tier: 'free', kw: 'resim fotoğraf jpeg png webp küçült sıkıştır boyut', render: toolImage },
+  { id: 'birim', name: 'Birim Dönüştürücü', desc: 'Uzunluk, ağırlık, sıcaklık, hacim, alan, hız, veri ve zaman.', cat: 'Hesaplama', icon: 'units', tier: 'free', kw: 'çevir metre kilo celsius fahrenheit dönüm', render: toolUnits },
+  { id: 'sifre', name: 'Şifre Gücü Kontrolü', desc: 'Şifrenizin gücünü ölçün ve güçlü bir şifre oluşturun.', cat: 'Güvenlik', icon: 'lock', popular: true, tier: 'free', kw: 'parola şifre güvenlik güçlü oluştur', render: toolPassword },
+  { id: 'not', name: 'Yerel Not Defteri', desc: 'Notlarınız yalnızca cihazınızda saklanır; sunucuya gitmez.', cat: 'Metin', icon: 'notes', tier: 'free', kw: 'not defter yazı hatırlatma', render: toolNotes }
+];
+const available = t => t.tier !== 'premium' || (CONFIG.premium.enabled && CONFIG.premium.unlocked);
+const LIST = () => TOOLS.filter(available);
+
+/* =========================================================
+   UYGULAMA KABUĞU: durum, yönlendirme, ana sayfa
+   ========================================================= */
+const state = { q: '', cat: store.get('cat', 'Tümü') };
+let favs = store.get('favs', []); if (!Array.isArray(favs)) favs = [];
+let recent = store.get('recent', []); if (!Array.isArray(recent)) recent = [];
+let cleanup = null;
+const valid = id => TOOLS.some(t => t.id === id);
+favs = favs.filter(valid); recent = recent.filter(valid);
+
+const cardHTML = t => {
+  const on = favs.includes(t.id);
+  return `<article class="card"><a class="card-link" href="#/arac/${t.id}"><span class="ico">${icon(t.icon)}</span><span class="card-body"><strong>${t.name}</strong><span>${t.desc}</span></span></a>` +
+    `<button type="button" class="fav${on ? ' on' : ''}" data-fav="${t.id}" aria-pressed="${on}" aria-label="${t.name} ${on ? 'favorilerden çıkar' : 'favorilere ekle'}" title="${on ? 'Favorilerden çıkar' : 'Favorilere ekle'}">${icon('star')}</button></article>`;
+};
+const section = (title, tools, extra = '') => `<section class="sec"><h2>${title}<span class="n">${tools.length}${extra}</span></h2><div class="grid">${tools.map(cardHTML).join('')}</div></section>`;
+const adHTML = name => `<div class="ad-slot sec" data-slot="${name}" hidden aria-label="Reklam alanı"></div>`;
+
+function renderChips() {
+  const all = ['Tümü', 'Favoriler', ...CATS];
+  $('#chips').innerHTML = all.map(c => `<button type="button" class="chip" data-cat="${c}" aria-pressed="${state.cat === c}">${c}${c === 'Favoriler' && favs.length ? ' (' + favs.length + ')' : ''}</button>`).join('');
+}
+function renderLists() {
+  const box = $('#lists'), q = norm(state.q.trim()), tools = LIST();
+  let html = '';
+  const match = t => !q || norm(`${t.name} ${t.desc} ${t.cat} ${t.kw}`).includes(q);
+  if (!q && state.cat === 'Tümü') {
+    const fl = favs.map(id => tools.find(t => t.id === id)).filter(Boolean), rl = recent.map(id => tools.find(t => t.id === id)).filter(Boolean).slice(0, 4);
+    if (fl.length) html += section('★ Favorilerim', fl);
+    if (rl.length) html += section('Son kullanılanlar', rl);
+    html += section('Popüler araçlar', tools.filter(t => t.popular));
+    html += adHTML('homeMid');
+    html += section('Tüm araçlar', tools);
+  } else {
+    let res = tools.filter(match);
+    if (state.cat === 'Favoriler') res = res.filter(t => favs.includes(t.id)); else if (state.cat !== 'Tümü') res = res.filter(t => t.cat === state.cat);
+    if (res.length) html = section(q ? 'Arama sonuçları' : state.cat, res);
+    else if (state.cat === 'Favoriler' && !q) html = '<div class="empty sec">Henüz favori araç eklemediniz. Araç kartlarındaki yıldıza dokunarak ekleyin.</div>';
+    else html = `<div class="empty sec">${q ? `“${esc(state.q.trim())}” için araç bulunamadı.` : 'Bu kategoride araç yok.'} Farklı bir anahtar kelime veya kategori deneyin.</div>`;
+  }
+  box.innerHTML = html;
+  mountAds(box);
+}
+function toggleFav(id) {
+  favs = favs.includes(id) ? favs.filter(x => x !== id) : [...favs, id];
+  store.set('favs', favs); toast(favs.includes(id) ? 'Favorilere eklendi' : 'Favorilerden çıkarıldı');
+  renderChips();
+  if (!$('#home').hidden) renderLists();
+  else { const b = $('#toolFav'); if (b) { const on = favs.includes(id); b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); b.setAttribute('aria-label', on ? 'Favorilerden çıkar' : 'Favorilere ekle'); } }
+}
+/* Reklamlar: her alan kendi izole (sandbox) iframe'inde yüklenir.
+   Böylece reklam betiği sayfayı/verileri göremez, birden çok reklam çakışmaz,
+   yüklenemezse (reklam engelleyici vb.) boş kalır ve arayüz bozulmaz. */
+const adFit = a => {
+  const inner = a.firstElementChild, f = inner && inner.firstElementChild;
+  if (!f) return;
+  const s = Math.min(1, a.clientWidth / CONFIG.ads.w);
+  inner.style.height = Math.round(CONFIG.ads.h * s) + 'px';
+  f.style.transform = `scale(${s})`;
+  f.style.left = Math.max(0, (a.clientWidth - CONFIG.ads.w * s) / 2) + 'px';
+};
+const adRO = 'ResizeObserver' in window ? new ResizeObserver(es => es.forEach(e => adFit(e.target))) : null;
+function mountAds(root) {
+  $$('.ad-slot', root).forEach(a => {
+    if (!CONFIG.ads.enabled || !/^https:\/\//.test(CONFIG.ads.src)) { a.hidden = true; return; }
+    if (a.dataset.ready) { a.hidden = false; return; }
+    a.dataset.ready = '1'; a.hidden = false;
+    const { key, src, w, h } = CONFIG.ads;
+    const inner = document.createElement('div'); inner.className = 'ad-in';
+    const f = document.createElement('iframe');
+    f.title = 'Reklam'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
+    f.setAttribute('sandbox', 'allow-scripts allow-popups allow-popups-to-escape-sandbox');
+    f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}</style></head><body>' +
+      '<script>atOptions={"key":"' + key + '","format":"iframe","height":' + h + ',"width":' + w + ',"params":{}};<\/script>' +
+      '<script src="' + src + '"><\/script></body></html>';
+    inner.appendChild(f); a.appendChild(inner); adFit(a);
+    if (adRO) adRO.observe(a);
+  });
+}
+function showHome() {
+  if (cleanup) { cleanup(); cleanup = null; }
+  $('#toolView').hidden = true; $('#toolView').textContent = ''; $('#home').hidden = false;
+  document.title = 'TekTık — İhtiyacın olan her araç, tek tık uzağında';
+  renderChips(); renderLists(); mountAds($('#home')); mountAds($('footer'));
+}
+function showTool(t) {
+  if (cleanup) { cleanup(); cleanup = null; }
+  recent = [t.id, ...recent.filter(x => x !== t.id)].slice(0, 6); store.set('recent', recent);
+  $('#home').hidden = true;
+  const view = $('#toolView'); view.hidden = false;
+  const on = favs.includes(t.id), related = LIST().filter(x => x.id !== t.id && x.cat === t.cat).concat(LIST().filter(x => x.id !== t.id && x.cat !== t.cat)).slice(0, 3);
+  view.innerHTML = `
+    <div class="tool-head">
+      <a class="back" href="#/">${icon('back')} Tüm araçlar</a>
+    </div>
+    <div class="tool-head" style="padding-top:0">
+      <div class="tool-title"><span class="ico">${icon(t.icon)}</span><div><h1 id="toolH" tabindex="-1">${t.name}</h1><p>${t.desc}</p></div></div>
+      <div class="tool-actions">
+        <button type="button" id="toolFav" class="icon-btn fav${on ? ' on' : ''}" style="position:static" data-fav="${t.id}" aria-pressed="${on}" aria-label="${on ? 'Favorilerden çıkar' : 'Favorilere ekle'}">${icon('star')}</button>
+        <button type="button" id="toolShare" class="icon-btn" aria-label="Aracı paylaş">${icon('share')}</button>
+      </div>
+    </div>
+    <div class="ad-slot" data-slot="toolTop" hidden aria-label="Reklam alanı" style="margin-top:6px"></div>
+    <div class="tool-body" id="toolBody"></div>
+    <div class="ad-slot" data-slot="toolBottom" hidden aria-label="Reklam alanı"></div>
+    <section class="sec"><h2>Diğer araçlar</h2><div class="grid">${related.map(cardHTML).join('')}</div></section>`;
+  document.title = t.name + ' — TekTık';
+  $('#toolShare').onclick = () => share({ title: t.name + ' — TekTık', text: t.desc, url: location.href.split('#')[0] + '#/arac/' + t.id });
+  try { const c = t.render($('#toolBody')); if (typeof c === 'function') cleanup = c; }
+  catch (e) { console.error(e); $('#toolBody').innerHTML = '<div class="empty">Bu araç yüklenirken bir sorun oluştu. Sayfayı yenileyip tekrar deneyin.</div>'; }
+  mountAds(view); mountAds($('footer')); window.scrollTo(0, 0); $('#toolH').focus({ preventScroll: true });
+}
+function route() {
+  const m = location.hash.match(/^#\/arac\/([\w-]+)/), t = m && LIST().find(x => x.id === m[1]);
+  if (t) showTool(t); else { if (m) history.replaceState(null, '', '#/'); showHome(); window.scrollTo(0, 0); }
+}
+
+/* tema */
+function applyTheme(th, save) {
+  document.documentElement.setAttribute('data-theme', th);
+  $('#themeBtn').innerHTML = th === 'dark' ? icon('sun') : icon('moon');
+  $('#themeBtn').setAttribute('aria-label', th === 'dark' ? 'Açık temaya geç' : 'Karanlık temaya geç');
+  const meta = $('meta[name=theme-color]'); if (meta) meta.setAttribute('content', th === 'dark' ? '#000000' : '#ffffff');
+  if (save) store.set('theme', th);
+}
+
+/* olaylar */
+document.addEventListener('click', e => {
+  const f = e.target.closest('[data-fav]'); if (f) { e.preventDefault(); toggleFav(f.dataset.fav); return; }
+  const c = e.target.closest('[data-cat]'); if (c) { state.cat = c.dataset.cat; store.set('cat', state.cat); renderChips(); renderLists(); }
+});
+$('#q').addEventListener('input', debounce(e => { state.q = e.target.value; renderLists(); }, 120));
+$('#themeBtn').addEventListener('click', () => applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark', true));
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && !e.ctrlKey && !e.metaKey && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !$('#home').hidden) { e.preventDefault(); $('#q').focus(); }
+});
+window.addEventListener('hashchange', route);
+
+applyTheme(store.get('theme', 'dark') === 'light' ? 'light' : 'dark', false);
+if (!['Tümü', 'Favoriler', ...CATS].includes(state.cat)) state.cat = 'Tümü';
+route();
+
+window.TekTik = { version: '1.0.0', developer: 'SecureInf', tools: TOOLS.map(t => t.id) };
+})();
+</script>
+</body>
+</html>
