@@ -139,7 +139,7 @@ input[type=checkbox]{width:20px;height:20px;min-height:0;accent-color:var(--acce
 .ad-slot{margin:22px 0 0;position:relative;overflow:hidden;min-height:60px;width:100%}
 .ad-slot::before{content:"Reklam";display:block;text-align:center;color:var(--muted);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
 .ad-slot .ad-in{position:relative;width:100%;height:60px;overflow:hidden}
-.ad-slot iframe{position:absolute;top:0;left:0;width:468px;height:60px;border:0;background:transparent;transform-origin:0 0;color-scheme:normal}
+.ad-slot iframe{position:absolute;top:0;left:0;width:468px;height:60px;border:0;background:transparent;transform-origin:0 0;border-radius:8px}
 .ad-slot.sec{margin-top:28px}
 footer{border-top:1px solid var(--border);padding:22px 0 calc(22px + env(safe-area-inset-bottom));color:var(--muted);font-size:.85rem;text-align:center}
 footer b{color:var(--text)}
@@ -1423,7 +1423,7 @@ function mountAds(root) {
     const f = document.createElement('iframe');
     f.title = 'Reklam'; f.loading = 'lazy'; f.referrerPolicy = 'no-referrer-when-downgrade';
     f.setAttribute('sandbox', 'allow-scripts allow-popups allow-popups-to-escape-sandbox');
-    f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;padding:0;background:transparent;overflow:hidden}</style></head><body>' +
+    f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><meta name="color-scheme" content="dark light"><style>:root{color-scheme:dark light}html,body{margin:0;padding:0;background:transparent!important;overflow:hidden}</style></head><body>' +
       '<script>atOptions={"key":"' + key + '","format":"iframe","height":' + h + ',"width":' + w + ',"params":{}};<\/script>' +
       '<script src="' + src + '"><\/script></body></html>';
     inner.appendChild(f); a.appendChild(inner); adFit(a);
